@@ -1,0 +1,109 @@
+.help usage Nov2003 liris_ql
+.ce
+\fBLIRIS_QL: Quick Look Tasks for LIRIS images\fR
+.nh
+Introduction
+This package provides tasks that help you in getting a quick look at your
+LIRIS data while you are observing at the telescope. When you take an exposure
+with LIRIS the array is reset and immediately read out. This is called the
+pre-read image and stored to the file in [*,*,1]. After the exposure time has
+passed the array is read out again. This is called the post-read image and
+is stored to the file in [*,*,2]. The information that is of interest to
+the observer is the difference of these two images. The liris_ql package
+provides a quick way to access this information.
+
+.nh
+Usage
+At the beginning of the night you probably want to focus the instrument.
+For this purpose you should take a series of (long enough - in order to
+median out the seeing) exposures at different focus settings. You can then
+use the \fBistarfocus\fR command to find the best focus values from the stars
+visible in this image. For example, if you took a focus series of 10 exposures
+you would then find the focus with the following command:
+
+.nf
+in> istarfocus s1,s2,s3,s4,s5,s6,s7,s8,s9,s10
+.fi
+
+During observing the tasks that you probably will be using most are the
+ones to display a single image and to quickly re-construct an image from
+a number of images taken in a dither pattern. Once you have taken an
+exposure you probably want to view it. To view an image use the \fBidispframe\fR
+task. For example
+
+.nf
+in> idisp r123456 1
+.fi
+
+will display exposure number 123456 in frame 1 of your display tool. You can
+then use \fBimexamine\fR to examine this image as usual. All parameters
+for the \fBdisplay\fR are also available for \fBidispframe\fR. Additionally
+if you want to subtract a sky frame from before displaying the image you
+can use the parameters \fBsubsky\fR and \fBsky\fR.
+
+.nf
+in> idisp r123456 1 subsky+ sky=sky_h 
+.fi
+
+would subtract the image sky_h from r123456 before displaying. A quick and
+dirty way to subtract a sky image is to use an exposure from a different field
+as the sky image, for example
+
+.nf
+in> idisp r123456 1 subsky+ sky=r123455
+.fi
+
+Another commonly used task is idedither. If you have taken a dither this
+tasks combines the images. You can select one of three methods with the
+match switch to find the offsets for combining the images:
+
+match="wcs"
+This is the most automatic way. The wcs, generated from the telescope pointing
+information, is used to find the offsets between images.
+
+match="pick1"
+This method is half automatic. The first image is displayed and you should
+pick a star with the 'm' key that will be visible on every following image.
+The task then calculates where the star should be on any image from the
+telescope pointing information and uses \fBimcentroid\fR to get the exact
+offset.
+
+match="manual"
+This method is completely manual. Every image is displayed and you
+have to pick \fBthe same\fR star on every image. The positions of the stars
+are then refined using \fBimcentroid\fR and used for calculating the image
+offsets.
+
+You can also use idedither in order to reassemble a mosaic. In this case
+you should use match="wcs" to fit the observations together, as the other
+methods rely on the same stars being present in every image.
+
+.nf
+To reassemble a 5 point dither using the "pick1" method and storing the
+result in a file named comb use:
+
+in> idedither r123456,r123457,r123458,r123459,r123460 comb match="pick1"
+
+You can now use \fBidispframe\fR (or \fBdisplay\fR) to view the result.
+
+Of course you can also use lists to specify the input files. The following
+example would combine all files listed (one file per line) in the file
+allfiles using the telescope pointing information and put the output into
+a file named allcomb:
+
+in> idedither @allfiles allcomb match="wcs"
+
+.fi
+
+.nh
+Advanced Usage
+
+
+.nh
+Authors
+.nf
+Robert Greimel (greimel@ing.iac.es)
+Chris Packham (cp@ing.iac.es)
+.fi
+
+.endhelp

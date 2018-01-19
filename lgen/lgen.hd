@@ -1,0 +1,13 @@
+# Help directory information for LGEN
+
+lgen	hlp="lgen$lgen.men"
+
+#usage		hlp=liris_ql$doc/usage.hlp
+#internals	hlp=liris_ql$doc/internals.hlp
+
+lcpixmap   	hlp=lgen$doc/lcpixmap.hlp,		src=lgen$lcpixmap.cl
+lframediff	hlp=lgen$doc/lframediff.hlp,		src=lgen$lframediff.cl
+ldisplay	hlp=lgen$doc/ldisplay.hlp,		src=lgen$ldisplay.cl
+limexamine	hlp=lgen$doc/limexamine.hlp,		src=lgen$limexamine.cl
+lshiftwcs	hlp=lgen$doc/lshiftwcs.hlp,		src=lgen$lshiftwcs.cl
+lrctalk		hlp=lgen$doc/lrctalk.hlp,		src=lgen$lrctalk.cl

@@ -1,0 +1,97 @@
+.help lcheckfile Nov2003 liris_ql
+.ih
+NAME
+lcheckfile -- find information about LIRIS and INGRID file
+.ih
+USAGE
+lcheckfile input
+.ih
+PARAMETERS
+.ls input
+The name of the file to find the information for.
+.le
+.ls subtract 
+Boolean return value that is set to true (yes) if the file has already been
+post-pre subtracted.
+.le
+.ls format           [unknown|ImpB|UDAS|UNIC]
+format result 
+.le
+.ls mode_aq          [unknown|PRE_POST|DIFF|DIFF_PRE|SLOPE|SLOPE_READS]
+String return value that indicates which mode the data has. 
+.le
+.ls instrument       [unknown|liris|ingrid]
+String return value that indicates which instrument was used. 
+.le
+.ls nimages 
+Integer return value that shows the number of FITS extensions in the file.
+.le
+.ls nwindows 
+Integer return value that shows the number of read out windows in the file.
+.le
+.ls verbose = no
+Verbosity flag. If set to yes, the information found is printed as well.
+.le
+.ih
+DESCRIPTION
+This task is most useful in IRAF cl scripts to decide if a file still needs
+to be post-pre subtracted or not. It also returns information about the
+data aquisition software (DAS) that took the frame. Files taken with different
+DAS usually have different data layout and header information.
+The task also returns other useful information for scripts like the number
+of FITS extensions, instrument type or readout windows that exist in the file.
+
+To recognised Instrument header field "DETECTOR" is used. 
+There are currently two formats for LIRIS and INGRID files which are taken with 
+different DAS: Implementation B (\fBImpB\fR) 
+.ls For LIRIS images:
+The number of extensions determine LIRIS image format.
+.le
+.ls For INGRID images:
+To destinguish between the two currently two bits of information are used:
+the number of image extensions and the header item HCTVERSI. HCTVERSI will
+only be in ImpB images. Also ImpB images will never have an image extension.
+Raw UDAS images on the other hand are written as multi extension FITS files
+but will have no image extensions once they are post-pre subtracted.
+
+The task then checks if the image has been post-pre subtracted. For ImpB
+images this is the case if the image is two dimensional. For UDAS this
+will in be the case when no image extensions are available.
+Newer versions of the INGRID_QL task \fBiframediff\fR add the FITS header
+item IQL-PP = T if post-pre subtraction has taken place which is also
+checked for.
+
+For ImpB images the number of extensions and the number of windows will
+always be 0.
+.le
+
+.ls For LIRIS images:
+Because Willian Herschell telescope format are now UDAS type, 
+images are mostly UDAS. Only some images of febrary 2003 images are in old
+format. It is enougth to look date on header image. 
+STOREMODE parametre show adquisition mode.
+
+.le
+
+.ih
+EXAMPLES
+To find information about the status of file r123456
+
+.nf
+cl> lcheckfile r123456 verbose=yes
+r123456 has not been post-pre subtracted
+r123456 is an UDAS image
+r123456 has 2 extensions
+r123456 has 0 windows
+.fi
+
+This task is mostly used in scripts in the following way
+
+
+.ih
+BUGS
+no bugs, only features.
+.ih
+SEE ALSO
+internals
+.endhelp

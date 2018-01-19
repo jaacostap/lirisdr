@@ -1,0 +1,43 @@
+.help ldisplay Jan2004 liris_ql
+.ih
+NAME
+ldisplay -- display each formats of liris (or ingrid) images 
+.ih
+USAGE
+ldisplay image frame
+.ih
+PARAMETERS
+.ls image
+name of image to be displayed
+.le
+.ls frame
+display frame number to be written 
+.le
+.ls displayopt: pset display parameters
+All the parameters from the display task are replicated in ldisplay.
+Please look at the display help page for their description.
+.le
+.ls tmpdir = )_.tmpdir
+Temporary directory to write substracted image when PRE_POST adquisition mode
+.le
+
+.ih
+DESCRIPTION
+Display input image introduced in every liris and ingrid formats in the chosen frame. 
+If the image format do not contain the post-pre subtracted image operation is done
+before display image. This is basically a wrapper for the \fBdisplay\fR task and 
+all the parameters of \fBdisplay\fR are available as well. 
+For more information about those parameters, please check the \fBdisplay\fR help page. 
+
+.ih
+EXAMPLES
+display the image r1254.fits aquired in pre-post mode in the frame number 1.
+
+ldisplay r1254 1
+.ih
+BUGS
+no bugs, only features.
+.ih
+SEE ALSO
+display lcheckfile
+.endhelp

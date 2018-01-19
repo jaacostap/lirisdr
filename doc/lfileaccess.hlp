@@ -1,0 +1,45 @@
+.help lfileaccess Nov2003 liris_ql
+.ih
+NAME
+lfileaccess -- verify existence of file and its type 
+.ih
+USAGE
+lfileaccess input
+.ih
+PARAMETERS
+.ls input
+Name of file that should be checked for existance and type.
+.le
+.ls exists = no
+Boolean return value indicating if file exists.
+.le
+.ls image = no
+Boolean return value indicating if image exists.
+.le
+.ls mask = no
+Boolean return value indicating if mask exists.
+.le
+.ls imglist = no
+Boolean return value when existing file indicating if it is an image list file.
+.le
+.ls corlist = no
+Boolean return value when existing file indicating if it is a geometric 
+correction file.
+.le
+.ls trspat = no
+Boolean return value when existing file indicating if it is a spatial 
+correction file.
+.ls trspec = no
+Boolean return value when existing file indicating if it is a spectral 
+correction file.
+.le
+.ih
+DESCRIPTION
+.ih
+EXAMPLES
+.ih
+BUGS
+no bugs, only features.
+.ih
+SEE ALSO
+.endhelp

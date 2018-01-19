@@ -1,0 +1,32 @@
+.help lhigherdate Jan2004 liris_ql
+.ih
+NAME
+lhigherdate -- compare two dates and return what is higher
+.ih
+USAGE
+Examine easily two dates
+.ih
+PARAMETERS
+.ls date1
+first input date (YYYY-MM-DD)
+.le
+.ls date2
+second input date (YYYY-MM-DD)
+.le
+.ls result
+Output result (-1:undefined|0:equal|1:date1|2:date2)
+.le
+.ih        
+DESCRIPTION
+
+
+.ih
+EXAMPLES
+
+.ih
+BUGS
+no bugs, only features.
+.ih
+SEE ALSO
+
+.endhelp

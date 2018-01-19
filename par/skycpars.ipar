@@ -1,0 +1,33 @@
+# Parameter file for ldithsky.skycomb and lsubsky.skycomb (liris_ql) 
+
+combine,s,h,"median","average|median",,Type  of  combining  operation  
+reject,s,h,"none","none|minmax|ccdclip|crreject|sigclip|avsigclip|pclip",,Type of rejection
+scale,s,h,"none",,,"Scaling at sky subtraction (none|mode|median|mean)"
+zero,s,h,"median",,,"Image zero point offset (none|mode|median|mean)"
+maskobj,b,h,yes,,,"Mask objects to create sky image?"
+corvgrad,b,h,yes,,,"Correct vertical gradient?"
+weight,s,h,"none",,,Image weights
+statsec,s,h,"",,,"Image section for computing statistics"
+gradquad,b,h,yes,,,"Perform correction per quadrant (vertical gradient)"
+gradsamp,s,h,"*",,,"Sample points to use in fit background (vertical gradient)"
+gradnaver,i,h,-51,,,"Number of points in sample averaging (vertical gradient)"
+gradorder,i,h,2,,,"Order of fitting function (vertical gradient)"
+gradlrej,r,h,0,,,"Low sigma reject (vertical gradient)"
+gradhrej,r,h,1,,,"High sigma reject (vertical gradient)"
+gradniter,i,h,3,,,"Number of iterations (vertical gradient)"
+gradkpcts,b,h,no,,,"Preserve the count number after gradient correction?"
+expname,s,h,"",,,"Image header exposure time keyword"
+lthreshold,r,h,INDEF,,,Lower threshold
+hthreshold,r,h,INDEF,,,Upper threshold
+nlow,r,h,0.0,0.,,minmax: Number (or fraction) of low pixels to reject
+nhigh,r,h,0.,0.,,minmax: Number (or fraction) of high pixels to reject
+nkeep,i,h,1,,,Minimum to keep (pos) or maximum to reject (neg)
+mclip,b,h,yes,,,Use median in sigma clipping algorithms?
+lsigma,r,h,3.,0.,,Lower sigma clipping factor
+hsigma,r,h,3.,0.,,Upper sigma clipping factor
+rdnoise,s,h,"0.",,,ccdclip: CCD readout noise (electrons)
+gain,s,h,"1.",,,ccdclip: CCD gain (electrons/DN)
+snoise,s,h,"0.",,,ccdclip: Sensitivity noise (fraction)
+sigscale,r,h,0.1,0.,,Tolerance for sigma clipping scaling corrections
+pclip,r,h,-0.5,,,pclip: Percentile clipping parameter
+grow,r,h,0.,0.,,Radius (pixels) for neighbor rejection

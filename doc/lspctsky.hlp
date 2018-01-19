@@ -1,0 +1,115 @@
+.help lspctsky Jan2004 liris_ql
+.ih
+NAME
+lspctsky -- Substract sky to spectra images
+.ih
+USAGE
+Substract input sky or provide A-B images
+.ih
+PARAMETERS
+.ls input
+Name of input spectral image list
+.le
+.ls output
+Output substracted image prefix name
+.le
+.ls outlist
+Output list file containing substracted images
+.le
+.ls insky
+Name of input sky list image
+.le
+.ls outsky
+Name of output sky image when saved
+.le
+.ls nlow = 1
+Number of low pixels to reject
+.le
+.ls nhigh = 1 
+Number of high pixels to reject
+.le
+.ls tmpdir = ")_.tmpdir"
+Temporary directory for file conversion
+.le
+.ls scale = "none"			[none|mode|median|mean|<keyword>]
+Scale images 
+.lef
+.ls verbose = no
+Verbose?
+.le
+.ih              
+DESCRIPTION
+Two posibilities exist to substract sky of an spectra image depending
+of observed object in infrared spectroscopy. If object is extensive and
+it is present all over the slit the sky is substracted of an image
+observed near the object at the same time of observation. However, if
+the object is slower (like a star) we can take two spectra of the object
+in different positions in the slit sufficient separated for they do not
+be superposed. Substracting their the result image will contain the 
+two spectras (one positive and other negative) without sky.
+This task consider these two posibilities. When /fBinsky/fR is
+introduced the sky substracted is made with input sky images. Else
+spectras are substracted A-B. 
+
+Result spectra names are made by task using /fBoutput/fR parameter and
+adding image reference. If output parametre is empty prefix used is 
+"lspctskyimsubsky" and images are saved in temporary directory.
+/fBoutli/fR file contain list of result images. 
+
+.ih
+EXTENSIVE OBJECTS
+/fBinsky/fR be able to be an image or a list of images. When it is an
+image, it will be substracted to each /fBinput/fR images to obtain
+substracted sky spectra. If it is a list of sky images, they will be
+combined using combopt pset parametres. Combined result is then
+substracted to each input spectras. If /fBoutsky/fR is no empty and file
+does not already exist, combined sky is saved using outsky name.
+
+.ih
+POINT SOURCE
+/fBinput/fR image list consist in a list of A and B type of spectra. An
+A spectra correspond the B spectra of the list in the same position.
+They are substracted and because sky level is the same result does not
+contain sky. If multirun sequence is wrong, that is one A or B image does not
+have A or B corresponded spectra, task is stoped and no result is
+presented.
+
+.ih
+EXAMPLES
+.nf
+cl> lspctsky r1267,r1268,r1269,r1270 output=sky insky=""
+.fi
+.nf
+INFO: image sky_r1267.fit exists
+INFO: extension fit is not mask extension
+WARNING: file does not exist
+INFO: image sky_r1268.fit exists
+INFO: extension fit is not mask extension
+WARNING: file does not exist
+INFO: image sky_r1269.fit exists
+INFO: extension fit is not mask extension
+WARNING: file does not exist
+INFO: image sky_r1270.fit exists
+INFO: extension fit is not mask extension
+WARNING: file does not exist
+INFO: No input sky image found
+
+sky treatment
+calculating A-B images ....
+substracting r1269.fit to r1267.fit ...
+substracting r1270.fit to r1268.fit ...
+sky treated
+.fi
+.nf
+cl> 
+.fi
+List of images contains two A type spectra (r1267 and r1268) and two
+Btype spectra (r1269 and r1270). 
+
+.ih
+BUGS
+no bugs, only features.
+.ih
+SEE ALSO
+imcombine
+.endhelp

@@ -1,0 +1,121 @@
+# lmoswavecal - compute wavelength calibration files
+# Author : Jose Acosta  (jap@ll.iac.es)
+# Version: 01. May. 2007
+#          
+##############################################################################
+procedure lmoswavecal(input,fmaskpos)
+string	input		{prompt="Arc input list"}
+string	outroot		{prompt="Output root name for slitlets"}
+string  fmaskpos	{prompt="File containing center of slitlets"}
+string	coordlist	{"lirisdr$std/arxe.dat",prompt="Coordinate list"}
+real	match		{30,prompt="Maximum difference for feature matching"}
+string  database	{"database",prompt="Database in which to find feature data"}
+string	specformat	{"lr_zj",enum="lr_zj|lr_hk|mr_k|hr_j|hr_h|hr_k",prompt="Grism used"}
+bool	trimspec	{no,prompt="Trim frames?"}
+bool	verbose		{yes,prompt="Verbose?"}
+
+string *list1	{prompt="Ignore this parameter"}
+string *list2	{prompt="Ignore this parameter"}
+
+begin	
+  string 	fmaskpos1, inli, arclet, slttyp, slttyp1, sltid1, coordlist1, database1
+  string	specformat1,idarclet1
+  string 	input1, outroot1
+  real		xc, cdelt, crval, crquad, crpix0, xoff
+  int		idumm	
+  int		nsc
+  bool		verb1,trimspec1
+  
+  
+  # expand input image list
+  input1 = input
+  outroot1 = outroot
+
+  verb1 = verbose
+  trimspec1 = trimspec
+    
+  #sections(input,option="fullname", >inli)
+  
+  fmaskpos1 = fmaskpos
+  if (!access(fmaskpos1)) 
+    {
+      print("ERROR: file ",fmaskpos1," does not exist")
+      beep; beep; beep
+      bye
+    } 
+ 
+  
+  ## read and trim input arc if required
+  if (trimspec1) {
+    inli = mktemp("_lmswvclinput")	
+    ltrimspec(input1,outroot1,fmaskpos1,outlist=inli,ismask=no)
+  } else {
+    inli = mktemp("_lmswvclin")
+    sections(input1,>inli)
+  }  
+  
+  coordlist1 = coordlist
+  specformat1 = specformat
+  database1 = database
+
+
+  ## start loop over slitlets
+  
+  list1 = inli
+  list2 = fmaskpos1
+  
+  while (fscan(list1, arclet) != EOF) 
+    {
+        slttyp = "REF0"
+	sltid1 = "CHECK"
+	xc = 0 
+	imgets(arclet,"SLITID")
+	idarclet = imgets.value
+	imgets(arclet,"SLITXC")
+	xc = real(imgets.value)
+	
+	lcentwave(specformat1,xc)
+
+        crval = lcentwave.crval
+	cdelt = lcentwave.cdelt
+        crquad= 0.
+        # call autoidentify based on the 
+        aidpars.crpix = lcentwave.crpix
+	aidpars.crquad = crquad
+	aidpars.reflist = "lirisdr$std/argon_ref.dat"
+	aidpars.cddir = "sign"
+	aidpars.aidord=3
+        aidpars.ntarget = 20
+	aidpars.nbins= 6
+        if (verb1) {
+ 	  print ("  ")
+	  print ("================================= ")
+	  print ("arclet ",arclet)
+	  print ("Doing wavelength calib. for slit id ",sltid1," using ",arclet)
+	  print ("Slit center at col  ",xc)
+	  print ("Ref. lambda is ",crval," at Ref pixel ",lcentwave.crpix)
+	}
+	autoidentify(arclet,crval,cdelt,coordlist=coordlist1,section="middle line",
+	    fwidth=5.,nsum=4,function="legendre",order=4,sample="*",niter=3,low_rej=3,
+	    match=-20,high_rej=3.,dbwrite=yes,overwrite=yes,database=database1,threshold=500)
+
+        # call reidentify
+	reidentify(arclet,arclet,section="middle line",trace=yes,step=4,nsum=4,
+	  nlost=4,coordlist=coordlist1,inter+) 
+  
+  
+        # call fitcoords
+	fitcoords(arclet,fitname="",interactive=yes,xorder=5,yorder=3)        
+
+    } 
+    
+
+bye
+
+noslitid: 
+    print ("ERROR: slitid not found",idarclet)
+  
+end  
+  
+  
+  	

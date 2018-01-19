@@ -1,0 +1,27 @@
+.help lbbody Jan2004 liris_ql
+.ih
+NAME
+lbbody -- combine spectral images considering AB cases
+.ih
+USAGE
+Examine visually caracteristics of some images
+.ih
+PARAMETERS
+.ls input
+Input image
+.le
+.ih           
+
+DESCRIPTION
+
+
+.ih
+EXAMPLES
+
+.ih
+BUGS
+no bugs, only features.
+.ih
+SEE ALSO
+
+.endhelp

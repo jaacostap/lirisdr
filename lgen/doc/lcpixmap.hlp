@@ -1,0 +1,45 @@
+.help lspctcombine Jan2004 liris_ql
+.ih
+NAME
+lfixpix         -- correct bad rows and interpolate central lines
+.ih
+USAGE
+Correct pixel deplacement during adquisition
+.ih
+PARAMETERS
+.ls frame_list
+List of images to correct
+.le
+.ls frame_out
+List of corrected images
+.le
+.ls badpix = "default"  		[<filename>|default]
+Bad pixel image
+.le
+.ls verbose = yes
+Verbose output?
+.le
+.ls interp = yes
+Interpolate bad pixels
+.le
+.ls tmpdir = )_.tmpdir
+Temporary directory for file conversion
+.le
+.ls stddir = )_.stddir
+Parametre directory for transformations
+.le
+
+.ih           
+DESCRIPTION
+
+
+.ih
+EXAMPLES
+
+.ih
+BUGS
+no bugs, only features.
+.ih
+SEE ALSO
+
+.endhelp

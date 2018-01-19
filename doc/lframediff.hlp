@@ -1,0 +1,73 @@
+.help lframediff Nov2000 liris_ql
+.ih
+NAME
+lframediff -- calculates post-pre integration image for all liris and ingrid
+format
+.ih
+USAGE
+lframediff input output
+.ih
+PARAMETERS
+.ls input
+Name of image to work on.
+.le
+.ls output
+Name of resulting image. If the name is the same as the input image, the
+input file gets overwritten.
+.le
+.ls subdark = no
+subtract a dark image ?
+.le
+.ls darkimg = ""
+name of dark to subtract if subdark == yes. The dark image has to be a two
+dimensional image (ie. has to be post-pre subtracted).
+.le
+.ls flatfield = no
+flatfield the data ?
+.le
+.ls flatimg = ""
+name of flatfield if flatfield == yes. The flatfield image has to be a two
+dimensional image (ie. has to be post-pre subtracted).
+.le
+.ls subsky = no
+subtract a sky image ?
+.le
+.ls skyimg = ""
+name of sky image to subtract if subsky == yes. The sky image has to be a two
+dimensional image (ie. has to be post-pre subtracted). If flatfield is set to
+yes then the sky should have been flat fielded as well.
+.le
+.ls wcs = yes
+Calculate world coordinate system from telescope pointing information.
+.le
+.ls verbose = yes
+Show verbose output for task.
+.le
+.ls info = yes
+Show information messages. This is less verbose than setting the verbose
+flag. If verbose == yes then info is forced on.
+.le
+.ls tmpdir = ")_.tmpdir"
+directory to store temporary files in.
+.le
+.ih
+DESCRIPTION
+This task calculates the actual image information in the frame by subtracting
+the pre read image from the post read image. If selected a dark image is then
+subtracted from the data. The resulting image is then flatfielded if so chosen.
+As a last step a sky image is subtracted if specified.
+The WCS for the image can be set from the telescope coordinate header
+information if selected.
+The result is then written to the output file. If the name of the output
+file is the same as the name for the input file then the input file is
+overwritten.
+.ih
+EXAMPLES
+iframediff r123456 pp123456
+.ih
+BUGS
+Does not handle lists of input and output images.
+.ih
+SEE ALSO
+imarith isetwcs
+.endhelp

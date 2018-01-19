@@ -1,0 +1,9 @@
+Menu for the package lirisdr.limage
+ 
+          lcysky 
+	  ldedither       -- combine dithered images
+          ldispstars      -- acquire star coordinates interactively in 2D-images
+	            
+          usage           -- help page describing liris_ql usage
+          internals       -- help page describing liris_ql internals
+

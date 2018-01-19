@@ -1,0 +1,64 @@
+.help lspctcombine Jan2004 liris_ql
+.ih
+NAME
+lspctcombine -- combine spectral images considering AB cases
+.ih
+USAGE
+Combine images of a list two a single specra image. If input spectra
+image type is AB A-B and B-A are considered
+.ih
+PARAMETERS
+.ls input
+List of images to combine
+.le
+.ls output
+Output image
+.le
+.ls combine = "average"
+Type of combine operation
+.le
+.ls typespct = "AB"				[single|AB]
+Type of spectral image 
+.le
+.ls line = INDEF
+Dispersion line
+.le
+.ls nsum = 10
+Number of dispersion lines to sum or median
+.le
+.ls apallopt = ""
+Apall configuration parametres
+.le
+.ls combopt = ""
+Imcombine configuration parametres
+.le
+.ls tmpdir = )_.tmpdir
+Temporary directory for file conversion
+.le
+.ls stddir = )_.stddir
+Parametre directory for transformations
+.le 
+.ls intersel = yes
+Interactive spectral selection
+.le
+.ls interap = no
+Interactive spectral extraction
+.le
+.ls verbose = no
+Verbose?
+.le
+
+.ih           
+DESCRIPTION
+
+
+.ih
+EXAMPLES
+
+.ih
+BUGS
+no bugs, only features.
+.ih
+SEE ALSO
+
+.endhelp

@@ -1,0 +1,42 @@
+.help lfilename Jan2004 liris_ql
+.ih
+NAME
+lfilename	  -- parse a file name into its path, root, reference and extension
+.ih
+USAGE
+Examine visually caracteristics of some images
+.ih
+PARAMETERS
+.ls filename
+File name
+.le
+.ls validim = yes
+Parse only if extension represents valid image datatype?
+.le
+.ls root = ""
+Returned filename root
+.le
+.ls extension = ""
+Returned filename extension
+.le
+.ls path = ""
+Returned filename path
+.le
+.ls reference = ""
+Returned filename reference
+.le
+
+.ih   
+DESCRIPTION
+
+
+.ih
+EXAMPLES
+
+.ih
+BUGS
+no bugs, only features.
+.ih
+SEE ALSO
+
+.endhelp

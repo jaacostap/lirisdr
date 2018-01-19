@@ -1,0 +1,94 @@
+.help lspectr Jan2004 liris_ql
+.ih
+NAME
+lspectr -- generate combined image from spectrum acquisition
+.ih
+USAGE
+Reduce spectra image obtaining 1D or 2D spectra as final result
+.ih
+PARAMETERS
+.ls input
+List of dither images
+.le
+.ls output
+Name of output file
+.le
+.ls outap
+Prefix name of individual output spectra
+.le
+.ls spcombine = "twodspec"				[onedspec|twodspec]
+Method used to combine images
+.le
+.ls subsky = "none"					[none|usrsky|combsky]
+Subtract sky
+.le
+.ls insky = ""
+name of input sky image
+.le
+.ls inmask = ""
+name of input mask file
+.le
+.ls trspat = "default"					[default|<filename>]
+name of spatial correction file 
+.le
+.ls trspec = "default"					[default|<filename>]
+name of spectral correction file
+.le
+.ls tmpdir = )_.tmpdir
+Temporary directory for file conversion
+.le
+.ls stddir = )_.stddir
+Parametre directory for transformations
+.le
+.ls scale = "none"						[none|mode|median|mean|<keyword>]
+Scale images
+.le
+.ls numspct = 1
+Number of spectra to extract
+.le
+.ls line = 750
+Dispersion line
+.le
+.ls nsum = 50
+Number of dispersion lines to sum or median
+.le
+.ls ressky = no
+Delete line sky residue
+.le
+.ls corrow = no
+Change bad rows?
+.le
+.ls intprow = no
+Interpolate central bad pixel rows
+.le
+.ls apallopt = ""
+Apall configuration parametres
+.le
+.ls combopt = ""
+Imcombine configuration parametres
+.le
+.ls verbose = no
+Verbose
+.le
+.ls dispstep = ""
+Steps display parameter configuration
+.le
+.ls interactive = yes
+Set spectre selection interactively?
+.le
+
+.ih           
+
+DESCRIPTION
+
+
+.ih
+EXAMPLES
+
+.ih
+BUGS
+no bugs, only features.
+.ih
+SEE ALSO
+
+.endhelp

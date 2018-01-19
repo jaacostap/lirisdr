@@ -1,0 +1,8 @@
+- procesamos los trozos de cada imagen por separado
+- correccion de distorsion geometrica adecuada a cada seccion
+
+- actualizar los ficheros de distorsion geometrica
+- evitar los cortes 
+
+- cortar los flat-field por debajo de un umbral para evitar efectos en los
+bordes 

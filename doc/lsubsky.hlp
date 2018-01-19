@@ -1,0 +1,53 @@
+.help lsubsky Jan2004 liris_ql
+.ih
+NAME
+lsubsky -- generate combined sky image from dither images and 
+	    substract it to images by cycles
+.ih
+USAGE
+Calcule sky from image list and substract to images
+.ih
+PARAMETERS
+
+.ls input
+name of dither images to be substracted of sky
+.le
+.ls output
+name of list file containing final sky substracted images 
+.le
+.ls insky
+Name of input sky list image
+.le
+.ls outsky
+Name of output sky image when saved
+.le
+.ls nlow/nhigh
+Number of low and high rejected pixels
+.le
+.ls tmpdir
+Temporary directory
+.le
+.ls scale 				[none|mode|median|mean|<keyword>]
+Scale images 
+.le
+.ls verbose
+Verbose?
+.le
+.ls displsub
+display sky substraction result
+.le
+.ih           
+
+DESCRIPTION
+
+
+.ih
+EXAMPLES
+
+.ih
+BUGS
+no bugs, only features.
+.ih
+SEE ALSO
+
+.endhelp

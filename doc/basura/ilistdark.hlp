@@ -1,0 +1,36 @@
+.help ifinddark Apr2000 ingrid_ql
+.ih
+NAME
+ifinddark -- find dark exposure times
+.ih
+USAGE
+ifinddark input
+.ih
+PARAMETERS
+.ls input
+images to search for exposurte times. Usually "r*".
+.le
+.ls logfile = "dark"
+name of output file for dark exposure script. Either a file name or STDOUT.
+.le
+.ls exptim = EXPTIM
+header keyword containing exposure time.
+.le
+.ls verbose = yes
+Be verbose ?
+.le
+.ih
+DESCRIPTION
+This task searches through the input files for unique exposure times.
+The output is a script that can be used to take expsoures of all the unique
+exposure times. This script is usually ran at the end of a night.
+.ih
+EXAMPLES
+.ih
+TIME REQUIREMENTS
+.ih
+BUGS
+no bugs, only features.
+.ih
+SEE ALSO
+.endhelp

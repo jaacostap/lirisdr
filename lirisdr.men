@@ -1,0 +1,10 @@
+ 
+	  lgen           -- Package containing general tasks
+	  limage         -- Package dedicated to imaging mode
+	  lspect         -- Package dedicated to spectroscopy mode
+          lutil          -- Package containing utilities routines
+	  	  
+          
+          usage           -- help page describing lirisdr usage
+          internals       -- help page describing lirisdr internals
+

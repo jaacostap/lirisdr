@@ -1,0 +1,29 @@
+#!/bin/bash 
+# add   -xv for debugging
+
+# This scripts locates the positions of the slits and the holes
+# in the image of a mask (LIRIS)
+# You might want to change some sextractor parameters.
+
+# SYNTAX:  sex image.fits
+
+# change to the directory where script is located
+#DIR=./
+dd=`which $0`
+SEXPDIR=`echo $dd | awk -F\/ '{for(i=1;i<NF;i++) printf("%s/", $i)}'`
+
+echo $SEXPDIR
+
+for infil
+do 
+  inroot=${infil%.fit}
+  echo $inroot
+  sex -c ${SEXPDIR}/default.sex $inroot.fits \
+	-PARAMETERS_NAME ${SEXPDIR}/default.param #\
+	#-FILTER_NAME ${DIR}/default.conv\
+	#-STARNNW_NAME default.nnw
+
+mv fndstars0.ASC $inroot.cat
+done 
+
+exit 0

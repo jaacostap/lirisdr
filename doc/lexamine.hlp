@@ -1,0 +1,39 @@
+.help lexamine Dic2003 liris_ql
+.ih
+NAME
+lexamine -- examine a list of images in every liris format 
+.ih
+USAGE
+Examine visually caracteristics of some images
+.ih
+PARAMETERS
+.ls input
+list of images to be examined
+.le
+.ls displ
+Display task options 
+.le
+.ls exam
+Examine task options
+.le
+.ls verbose
+Verbose?
+.le
+.ls tmpdir
+Temporary directory
+.le
+.ih           
+
+DESCRIPTION
+
+
+.ih
+EXAMPLES
+
+.ih
+BUGS
+no bugs, only features.
+.ih
+SEE ALSO
+
+.endhelp

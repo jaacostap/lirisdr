@@ -1,0 +1,21 @@
+
+    
+    For examples how to use the software check the following files
+    depending on the observing mode: 
+         - imaging mode
+          cl> help lirisdr$examples/reduce_imag.cl file+  
+         - imaging polarimetry
+          cl > help lirisdr$examples/reduce_limpol.cl file+
+         - long-slit spectroscopy
+          cl> help lirisdr$examples/reduce_spec.cl file+  
+
+    For user's notes open the file: 
+         lirisdr$doc/manual/LIRIS_DATA_REDUCTION.html 
+    using your favourite web browser. 
+    
+    Please report any problems or suggestions to:
+
+	     Jose Acosta Pulido (jap@ll.iac.es)
+
+
+    

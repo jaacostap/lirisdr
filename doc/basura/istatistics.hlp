@@ -1,0 +1,50 @@
+.help istatistics Apr2000 ingrid_ql
+.ih
+NAME
+istatistics -- compute and print image pixel statistics
+.ih
+USAGE
+istatistics input
+.ih
+PARAMETERS
+.ls input
+images for which statistics should be calculated
+.le
+
+The following parameters are all imstatistics parameters:
+.ls fields = "image,npix,mean,stddev,min,max"
+The statistical quantities to be computed and printed.
+.le
+.ls lower = INDEF
+Use only pixels with values greater than or equal to this limit.
+All pixels are above the default value of INDEF.
+.le
+.ls upper = INDEF
+Use  only  pixels  with values less than or equal to this limit.
+All pixels are below the default value of INDEF.
+.le
+.ls binwidth = 0.1
+The width of the histogram bins used for computing the  midpoint
+(estimate of the median) and the mode.  The units are in sigma.
+.le
+.ls format = yes
+Label  the  output columns and print the result in fixed format.
+If format is "no" no column labels are printed  and  the  output
+is in free format.
+.le
+.ih
+DESCRIPTION
+This task calculates statistical quantities of the image (in case of a 2D
+input image) or the post and pre read image (in case of a 3D input image).
+For more detailed information see the help pages for the imstatistics task.
+.ih
+EXAMPLES
+calculate the statistics for a frame
+istatistics r123456
+.ih
+BUGS
+no bugs, only features.
+.ih
+SEE ALSO
+imstatistics
+.endhelp

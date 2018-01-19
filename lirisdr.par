@@ -1,0 +1,15 @@
+# lirisdr package parameter file
+version,s,h,"V 2.20.0 - Jun 2017"
+motd,b,h,yes,,,"type the welcome banner?"
+# package wide parameters
+scale,r,h,0.25,,,"Detector plate scale in arcsec/pixel"
+tmpdir,s,h,"./",,,"temporary directory"
+stddir,s,h,"lirisdr$std/",,,"Liris database directory"
+bpmdb,s,h,"lbpmdb",,,"Liris database of bad pixel masks"
+bcmdb,s,h,"lbcmdb",,,"Liris database of column pixel masks"
+gdistdb,s,h,"lgdistdb",,,"Liris geometric correction file database"
+fcdb,s,h,"lfcdb",,,"Liris spectral image correction file database"
+
+# parametros para borrar cuando se hayan quitado de las tareas
+#bpm,s,h,"lbpm_020101.pl",,,"bad pixel mask"
+#lbcm,s,h,"lbcm_020101.pl",,,"Liris row and lines bad pixels"

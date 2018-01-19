@@ -1,0 +1,9 @@
+# liris_spect package parameter file
+version,s,h,"6feb2006"
+# package wide parameters
+scale,r,h,0.25,,,"scale in arcsec/pixel"
+dispaxis,i,h,1,,,"Dispersion axis (1=along lines,2=along columns)"
+tmpdir,s,h,"./",,,"temporary directory"
+stddir,s,h,"liris_ql$std/",,,"Liris database directory"
+fcdb,s,h,"lfcdb",,,"Liris spectral image correction file database"
+bpmdb,s,h,"lbpmdb",,,"Liris database of bad pixel masks"

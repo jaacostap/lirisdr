@@ -1,0 +1,18 @@
+# Parameter file for lexamine.exam (liris_ql)
+
+logfile,s,h,"",,,logfile
+keeplog,b,h,no,,,log output results
+defkey,s,h,"a",,,efault key for cursor list input
+autoredraw,b,h,yes,,,automatically redraw graph
+allframes,b,h,yes,,,use all frames for displaying new images
+nframes,i,h,0,,,number of display frames (0 to autosense)
+ncstat,i,h,5,,,number of columns for statistics
+nlstat,i,h,5,,,number of lines for statistics
+graphcur,s,h,"",,,graphics cursor input
+imagecur,s,h,"",,,image display cursor input
+wcs,s,h,"logical",,,Coordinate system
+xformat,s,h,"",,,X axis coordinate format
+yformat,s,h,"",,,Y axis coordinate format
+graphics,s,h,"stdgraph",,,graphics device
+display,s,h,"display(image='$1',frame=$2)",,, display command template
+use_display,b,h,yes,,,enable direct display interaction

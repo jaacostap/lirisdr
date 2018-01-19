@@ -1,0 +1,11 @@
+# limpol package parameter file
+version,s,h,"14Aug2007"
+# package wide parameters
+scale,r,h,0.25,,,"scale in arcsec/pixel"
+ftrimsec,s,h,"spoltrim.dat",,,"File containing sections of each polarization"
+tmpdir,s,h,"./",,,"temporary directory"
+stddir,s,h,"lirisdr$std/",,,"Liris database directory"
+bpmdb,s,h,"lbpmdb",,,"Liris database of bad pixel masks"
+bcmdb,s,h,"lbcmdb",,,"Liris database of column pixel masks"
+gdistdb,s,h,"lgdistdbpol",,,"Liris geometric correction file database"
+

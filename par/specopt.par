@@ -1,0 +1,18 @@
+# Parameter file for lreduction.dithopt (liris_ql)
+
+subsky,s,h,"combsky",,,"Subtract sky (none|usrsky|combsky|dispsky)"
+insky,s,h,"",,,"name of input sky image"
+match,s,h,"correlation",,,"Method used to match images (wcs|correlation)"
+
+# Correction parameter files
+inmask,s,h,"",,,"name of common mask file"
+
+corrow,b,h,no,,,"Change bad rows?"
+intprow,b,h,no,,,"Display image result"
+stmask,b,h,yes,,,"Make and apply individual star masks"
+adjshift,b,h,yes,,,"Adjust the calculated shift from image headers"
+ressky,b,h,yes,,,"Delete line sky residue in spectral images"
+combspc,b,h,yes,,,"Combine images at the end"
+
+scale,s,h,"none",,,"Scale images (none|mode|median|mean|<keyword>)"
+

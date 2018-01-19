@@ -1,0 +1,13 @@
+
+lspskynod - Subtract sky spectrum from ABBA sequences
+
+lspskynod3pt - Subtract sky from ABCABC sequences
+
+lspnodcomb - Combine sky subtracted frames, compute offsets, correct flat-field,
+		apply wavelength calibration and residual sky subtraction.
+
+MOS specific		
+ltrimspec - Trim spectra using information from 
+
+lmoswavecal - Compute wavelength calibration for MOS format. Needs estimation of
+		center of slitlets and sections. 		

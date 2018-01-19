@@ -1,0 +1,72 @@
+.help lstarmask Jan2004 liris_ql
+.ih
+NAME
+lstarmask -- Create object masks for input images
+.ih
+USAGE
+Obtain star mask and avoid star effects in sky image
+.ih
+PARAMETERS
+.ls input
+Image(s) to mask
+.le
+.ls output
+mask file names
+.le
+.ls nlow = 0./nhigh = 1.
+Value asigned to low and high pixels
+.le
+.ls addheader = "none"	(none|BPM|OBJMASK)
+How mask will be added in image header
+.le
+.ls filtsize = 15
+Median filter size for local sky evaluation
+.le
+.ls nsmooth = 3
+Scale for boxcar smoothing before thresholding. If nsmooth < -1 then a
+median smoothing is used. 
+.le
+.ls threshtype = "nsigma"
+Thresholding type: nsigma or constant
+.le
+.ls nsigthresh = 2.
+Threshold for masking in sky sigma
+.le
+.ls constthresh = 0.
+Constant threshold above sky for masking
+.le
+.ls checklimits = yes
+Check min and max pix values before filtering?
+.le
+.ls zmin = -32767./zmax = 32767.
+Minimum and maximum data value for fmedian
+.le
+.ls verbose = yes
+Verbose output?
+.le
+
+.ih             
+
+DESCRIPTION
+
+An object mask image is created from the specified field image. The object
+mask image if of pixel type short and has the value given by the parameter 
+goodvalue for the good pixels and the value given by the  parameter  badvalue 
+for the  bad  pixels.   The mask image  size and header parameters are taken
+from the specified template image.  
+The background can be  subtracted in two different ways, by median filtering or
+fitting a low order surface. The image after background subtraction can be
+smoothed (by boxcar or median filtering) in order to discriminate between 
+real objects and artifacts such as hot pixels, cosmic rays. 
+ 
+
+.ih
+EXAMPLES
+
+.ih
+BUGS
+no bugs, only features.
+.ih
+SEE ALSO
+
+.endhelp

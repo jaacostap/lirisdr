@@ -1,0 +1,114 @@
+.help lconstlist Nov2003 liris_ql
+.ih
+NAME
+lconstlist -- display each formats of liris (or ingrid) images 
+.ih
+USAGE
+lconstlist input output
+.ih
+PARAMETERS
+.ls input
+name of the list containing image name to be checked
+.le
+.ls output
+root name used for build list 
+.le
+.ls fcheck
+name of file containing list built result
+.le
+.ls tmpdir
+temporary directory work name
+.le
+.ls verbose
+print intermediate results
+.le
+.ih
+DESCRIPTION
+When image reduction of any image list will be made, it is important to recognise
+images of the same observation and make lists with images of the same group.
+lconstlist task make their and verify than times of images are right.
+
+If image type recognised (dither or spectr) the groups are made like this:
+
+.nf
+-------------------  ----------------------  ----------------------
+-  List with	  -  -  sub lists with    -  -  different	  -
+-  all completed  -  -  all completed	  -  -  exposures	  -
+-  serial sublist -  -  dith/spectr	  -  -  no list created   -
+-  (1 list with   -  -  (total: 	  -  ----------------------
+-  contsublist    -  -  2*nummultmax or   -  
+-  sublist)	  -  -  dithmax*nummultmax-  
+-------------------  ----------------------  
+
+ *** serial1   
+ *		     *** dith1/spectrA       *** nummult1
+ *** serial2 ------- *  		     *
+ *		     *** dith2/spectrB ----- *** nummult2
+ ...		     .. 		     ..
+ *		     *** dithmax	     *** nummultmax
+ *** serialmax
+.fi
+
+The algorithm for detecting groups of images is:
+Firstly we examine if an image is correct and using image header we verify
+that it correspond of an dither or spectral observation. The number of image of
+the group can be determined using it and we examine next images until group is 
+completed or an image does not verify proprieties of the group.
+Dither list is interrupted when: 
+- serial, dither/spectral or exposure does not c
+- run number image does not correspond
+- we can not read new image in the list
+And when start time do not correspond only warning message is print
+
+This task also make sublist containing different serial adquisition of the group 
+when there more than one serial. 
+
+User can introduce name of check file that will contain balance of process, i.e.
+all lists created, type of images contained, number of reference image, number of
+sublists and object of the observation.
+
+.ih
+EXAMPLES
+All observations of a nigth are contained in "observation" directory.
+We want create lists of different observations.
+
+.nf
+cl> lconstlist ./observation/r*.fits fcheck=obsf
+.if
+
+obsf is like following: 
+.nf
+List list16_1 no contain sublist. Total images: 8 
+Path of images: /net/jason/lirisdata/DATA/comm_feb03/20030216/
+Reference image: r1096.fit -D-1/4: FS120H-
+Aquisition type: dither
+
+
+List list16_2 no contain sublist. Total images: 8 
+Path of images: /net/jason/lirisdata/DATA/comm_feb03/20030216/
+Reference image: r1104.fit -D-1/4: FS120Ks-
+Aquisition type: dither
+
+
+List list16_3 no contain sublist. Total images: 8 
+Path of images: /net/jason/lirisdata/DATA/comm_feb03/20030216/
+Reference image: r1112.fit -D-1/4: FS120J-
+Aquisition type: dither
+
+
+List list16_4 no contain sublist. Total images: 2 
+Path of images: /net/jason/lirisdata/DATA/comm_feb03/20030216/
+Reference image: r1120.fit -A-1/1: testnod-
+Aquisition type: spectr
+
+....
+.if 
+ 
+ 
+.ih
+BUGS
+no bugs, only features.
+.ih
+SEE ALSO
+lconstlist   lhgets
+.endhelp

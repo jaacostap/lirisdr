@@ -1,0 +1,59 @@
+.help iwininfo Jul2000 ingrid_ql
+.ih
+NAME
+iwininfo -- find information about window
+.ih
+USAGE
+iwininfo input window
+.ih
+PARAMETERS
+.ls input
+The name of the file containing the window.
+.le
+.ls window
+The window number to find the information for. Currently the window number
+lies between 1 and 4.
+.le
+.ls xstart = 0
+Integer return value of the window start position in x
+.le
+.ls xend = 0
+Integer return value of the window end position in x
+.le
+.ls ystart = 0
+Integer return value of the window start position in y
+.le
+.ls yend = 0
+Integer return value of the window end position in y
+.le
+.ls section = ""
+String return value of the window section.
+.le
+.ls verbose = no
+Verbosity flag. If set to yes, the information found is printed as well.
+.le
+.ih
+DESCRIPTION
+This task is most useful in IRAF cl scripts to extract the window position
+from the file header. If the window does not exist, 0 is returned for all
+parameters.
+.ih
+EXAMPLES
+To find information about the second window of file r123456
+
+.nf
+cl> iwininfo r123456 2 verbose=yes
+xstart  : 100
+xend    : 300
+ystart  : 250
+yend    : 450
+section : [100:300,250:450]
+.fi
+
+.ih
+BUGS
+no bugs, only features.
+.ih
+SEE ALSO
+icheckfile, internals
+.endhelp

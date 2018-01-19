@@ -1,0 +1,35 @@
+#!/bin/bash 
+# add   -xv for debugging
+
+# This scripts locates the positions of the slits and the holes
+# in the image of a mask (LIRIS)
+# You might want to change some sextractor parameters.
+
+# SYNTAX:  sex image.fits
+
+# change to the directory where script is located
+#DIR=./
+dd=`which $0`
+SEXPDIR=`echo $dd | awk -F\/ '{for(i=1;i<NF;i++) printf("%s/", $i)}'`
+filelist=$1
+minarea=$3
+outlist=$2
+
+echo $SEXPDIR
+echo 'Minarea '$minarea
+
+for infil in $(cat $filelist)
+do 
+  #inroot=${infil}
+  inroot=${infil%.fit}
+  echo $inroot
+  sex -c ${SEXPDIR}/default.sex $infil \
+ 	-PARAMETERS_NAME ${SEXPDIR}/starpos.param \
+         -CATALOG_NAME $inroot.cat \ 
+         #-DETECT_MINAREA $minarea \
+	 #-FILTER_NAME ${DIR}/default.conv \
+	 #-STARNNW_NAME ${DIR}/default.nnw
+  echo $inroot.cat >>$outlist
+done 
+
+exit 0

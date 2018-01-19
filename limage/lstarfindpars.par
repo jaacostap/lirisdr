@@ -1,0 +1,6 @@
+sepmin,r,h,4.,,,"Minimum separation in HWHM"
+fradius,r,h,2.5,,,"Fitting radius in HWHMM"
+roundlo,r,h,0.,,,"Lower ellipticity limit"
+roundhi,r,h,0.35,,,"Upper ellipticity limit"
+sharplo,r,h,0.5,,,"Lower sharpness limit"
+sharphi,r,h,2,,,"Upper sharpness limit"

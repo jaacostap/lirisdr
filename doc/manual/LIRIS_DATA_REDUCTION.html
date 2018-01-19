@@ -1,0 +1,1405 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+
+
+
+
+
+
+  
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <title>LIRIS DATA REDUCTION</title><style type="text/css">
+  p.iraf { background-color: rgb(255, 102, 102);
+    }
+
+  p.obs { background-color: rgb(51, 102, 255);
+    }
+
+
+  </style></head>
+
+<body style="background-image: url(Texture_lt_blue_020.jpg);">
+
+
+
+
+
+
+
+<h1 style="text-align: center;"><a class="mozTocH1" name="mozTocId107174"></a>LIRIS DATA REDUCTION</h1>
+
+
+
+
+
+
+
+<h2></h2>
+
+
+
+
+
+<p style="text-align: justify;" class="iraf">Most &nbsp;of the
+&nbsp;processing steps described &nbsp;here &nbsp;are implemented
+within an IRAF &nbsp;package &nbsp;called &nbsp;<span style="font-style: italic; font-weight: bold;">lirisdr</span>.</p>
+
+
+
+
+
+<p style="text-align: center;" class="iraf"><img style="width: 494px; height: 325px;" alt="" src="lirisdr.jpg"></p>
+
+
+
+
+
+<p style="text-align: justify;" class="iraf">There is a directory
+associated with the lirisdr tasks which is used as a repository for
+calibration files which can be used as default. The usual location is a
+subdirectory called std under the package directory tree.&nbsp; </p>
+
+
+
+
+
+<p class="iraf"><a class="mozTocH2" name="mozTocId539224"></a></p>
+
+
+
+
+
+
+
+<p style="text-align: justify;">These notes are divided into three main sections:</p>
+<p style="text-align: justify;">-<a href="#First_corrections">first correction</a></p>
+<p style="text-align: justify;">-<a href="#imaging_mode">imaging mode</a></p>
+<p style="text-align: justify;">-<a href="#Spectroscopic_Mode">spectroscopic mode</a></p><p style="text-align: justify;">&nbsp;&nbsp;&nbsp; Multiobject<br>
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+<h2 style="text-align: center;"><br>
+
+
+
+</h2>
+
+
+
+
+
+<h2 style="text-align: center;"></h2>
+
+
+
+
+
+<hr style="width: 100%; height: 2px;">
+<h2 style="text-align: center;"><br>
+
+
+
+
+
+</h2>
+
+
+
+
+
+<h2 style="text-align: center; color: rgb(102, 0, 204); font-weight: bold;"><a name="First_corrections"></a>First
+corrections</h2>
+
+
+
+
+
+
+
+<h3><a class="mozTocH3" name="mozTocId359842"></a>Bad
+pixel mapping</h3>
+
+
+
+
+
+<p>Currently there is a shift of pixels on the detector which does not
+correspond to the actual geometrical location, which is due to the
+reading scheme of the LIRIS detector. However it is relatively simple
+to correct and there exist a C routine for such purpose. </p>
+
+
+
+
+
+<p class="iraf">It is also possible to perform the correction within lirisdr/IRAF using the task <span style="font-style: italic; font-weight: bold;">lcpixmap</span>. &nbsp; </p>
+
+
+
+
+
+
+
+<h3><a class="mozTocH3" name="mozTocId379725"></a>Correction
+of Cross-talk between quadrants</h3>
+
+
+
+
+
+<p style="text-align: justify;">There is an effect of row cross-talk
+between quadrants which produces
+an uniform shading&nbsp;in the rows containing bright sources and also
+in the corresponding rows of the other quadrants. The magnitude of this
+shadow is around 1.5E-5 on the sum of the affected row. This effect can
+be noticed when the detector is exposed to very bright sources in
+imaging mode. The effect becomes very relevant &nbsp;in multi -object
+spectroscopy, especially when bright sources, used as reference, are
+combined with very faint targets. Special care must be taken if the
+distance between them is around 128".&nbsp;</p>
+
+
+
+
+
+<p style="text-align: justify;">Currently the LIRIS detector rows correspond to the spectral dispersion axis. </p>
+
+
+
+
+
+<br>
+
+
+
+
+
+
+
+<div style="text-align: center;"><img style="width: 404px; height: 324px;" alt="" src="crosstalk-1.gif"><br>
+
+
+
+
+
+</div>
+
+
+
+
+
+<br>
+
+
+
+
+
+<p style="text-align: justify;" class="iraf">The IRAF task <span style="font-style: italic; font-weight: bold;">rctalk</span>
+within <span style="font-style: italic; font-weight: bold;">lirisdr</span> performs the correction of the row cross-talk. It is
+recommended to do not correct the effect&nbsp; unless it affects
+significantly the results.&nbsp; </p>
+
+
+
+
+
+<br>
+
+
+
+
+
+<h4>Bad
+pixel mask</h4>
+
+
+
+
+
+<p>
+
+Different mask types may be created and combined to form a final mask. In
+general bad pixels can be classified into three categories: </p>
+
+
+
+
+
+
+
+<ul>
+
+
+
+
+
+  <li>
+    
+    
+    
+    
+    
+    <p>hot pixels - these pixels show an enhanced level of counts
+even
+without receiving any illumination. The number of hot pixels increases
+with the exposure time (nearly proportional to log(texp). The location
+of hot pixels can be
+well determined from dark frames taken with the same exposure time as
+the science frames.&nbsp;&nbsp;</p>
+
+
+
+
+
+  </li>
+
+
+
+
+
+  <li>
+    
+    
+    
+    
+    
+    <p>warm pixels - these pixels appear as less sensitive units
+with
+respect to the average. &nbsp;</p>
+
+
+
+
+
+  </li>
+
+
+
+
+
+  <li>
+    
+    
+    
+    
+    
+    <p>cold or blind&nbsp; pixels - these pixels always
+exhibit a very
+low count level, appearing as dark spots in the detector.&nbsp;The
+location of cold pixels can be well determined from flat-field or blank
+sky frames.</p>
+
+
+
+
+
+  </li>
+
+
+
+
+
+</ul>
+
+
+
+
+
+
+
+<p class="iraf"> The IRAF routine <span style="font-weight: bold; font-style: italic;">ccdmask</span> can be used to generate the masks starting from the appropiate images. </p>
+
+
+
+
+
+
+
+<h4><br>
+
+
+
+
+</h4>
+
+
+
+
+
+<br>
+
+
+
+
+
+<br>
+
+
+
+
+
+<hr style="width: 100%; height: 2px;"><br>
+
+
+
+
+
+
+
+
+<h2 style="text-align: center;"><a class="mozTocH2" name="imaging_mode"></a>Imaging
+mode</h2>
+
+
+
+
+
+
+
+<br>
+
+
+
+
+
+
+
+<h3><a class="mozTocH3" name="mozTocId300470"></a>Auxiliary
+images:</h3>
+
+
+
+
+
+
+
+<h4><a class="mozTocH4" name="mozTocId220683"></a>Flat-field
+correction</h4>
+
+
+
+
+
+<p>In general flat-field images will be taken during twilights or by
+illumination of the dome, as uniformly as possible. It is recommended
+to have illumination level around 8000-10000 ADUs. For the filters
+covering the K band spectral range it is recommended to obtain bright
+and dark frames of the same&nbsp;exposure time, in order to suppress
+the possible thermal contamination of the telescope enviroment.&nbsp;</p>
+
+
+
+
+
+
+
+<p class="iraf"> The flatfield images can be combined using the IRAF task
+<span style="font-weight: bold; font-style: italic;">imcombine</span></p>
+
+
+
+
+
+
+
+<div style="text-align: center;">
+<table style="width: 646px; height: 510px; text-align: left; margin-left: auto; margin-right: auto;" border="1" cellpadding="2" cellspacing="2">
+
+
+
+
+
+  <tbody>
+
+
+
+
+
+    <tr align="center">
+
+
+
+
+
+      <td><img style="width: 617px; height: 444px;" alt="" src="flatks.jpg"></td>
+
+
+
+
+
+    </tr>
+
+
+
+
+
+    <tr>
+
+
+
+
+
+      <td>Example of a flat-field image taken through the Ks filter.
+There is left-to-right slope accounting for about 25 - 30 % difference
+in response.</td>
+
+
+
+
+
+    </tr>
+
+
+
+
+
+  
+  
+  
+  
+  
+  </tbody>
+</table>
+
+
+
+
+
+<br style="font-weight: bold; font-style: italic;">
+
+
+
+
+
+
+
+</div>
+
+
+
+
+
+<h4><a class="mozTocH4" name="mozTocId830329"></a>Determination
+of field&nbsp;distortion</h4>
+
+
+
+
+
+
+
+<p>
+The field distorsion can be determined using stars in the
+images&nbsp; which are well calibrated astrometrically or using a
+reference mask which can be inserted in the LIRIS focal plane. In the
+second option we can determined a geometrical transformation which can
+be applied to any frame. It has been checked that this transformation
+is not very sensitive to the telescope position or instrument
+orientation. Therefore a single transformation can be used.&nbsp;</p>
+
+
+
+
+
+
+
+<h3><a class="mozTocH3" name="mozTocId878077"></a>Processing
+steps:</h3>
+
+
+
+
+
+
+
+The processing steps required to obtain a final image are mentioned in the following scheme. <br>
+
+
+
+<br>
+
+
+
+<div style="text-align: center;"><img style="width: 518px; height: 739px;" alt="" src="imaging.jpg"><br>
+
+
+
+<br>
+
+
+
+<br>
+
+
+
+
+
+
+
+</div>
+
+
+
+<p class="iraf"> All routines used to reduce the data in
+imaging mode are contained
+within the package <span style="font-style: italic; font-weight: bold;">limage. </span><span style="font-weight: bold;"></span>The main routine performing all steps is called <span style="font-style: italic; font-weight: bold;">ldedither</span>. The complete list of parameters is included in the figure below.&nbsp;</p>
+
+
+
+
+
+<p style="text-align: center;" class="iraf">&nbsp;<img style="width: 507px; height: 620px;" alt="" src="ldedither.jpg"></p>
+
+
+
+
+
+<p class="iraf"> </p>
+
+
+
+
+
+
+
+<h4><br>
+
+
+
+
+</h4>
+
+
+
+
+<h4><a class="mozTocH4" name="mozTocId733949"></a>Flat-field
+correction</h4>
+
+
+
+
+
+
+
+
+<p><span style="color: rgb(0, 0, 0);">The flat-field correction is one
+of the first perfomed corrections. It must correct not only for
+pixel-to-pixel gain variations but also for large scale sensitive
+variations of the array.&nbsp;</span></p>
+
+
+
+
+
+<p class="iraf"><span style="color: rgb(0, 0, 0);">There is no
+dedicated task to perform the flat-field correction, instead it
+can&nbsp; be performed within the routine ldedither whenever a name for
+the flat-field image (parameter <span style="font-weight: bold; font-style: italic;">inflat</span>) is specified. The corrected images can be kept for later analysis is a prefix is specified (parameter <span style="font-style: italic; font-weight: bold;">outfltc</span>).&nbsp; </span><br>
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+<h4></h4>
+
+
+
+
+
+<h4><a class="mozTocH4" name="mozTocId475129"></a><span style="font-weight: bold;"> </span>Sky subtraction</h4>
+
+
+
+
+
+
+
+
+
+<p style="text-align: justify;"><span style="color: rgb(255, 204, 0);"></span><span style="color: rgb(255, 204, 0);"><span style="color: rgb(0, 0, 0);">This
+is the most crutial step in the data reduction of near infrared images.
+The sky contribution has to be estimated and subtracted individually to
+each pixel. Therefore it is very important to have a clean estimation
+of such value. </span></span>&nbsp;Depending on the extension of the
+target the sky images can be generated
+from a set of dithered images whose pointing is very close to the
+target position or from separated exposures pointing to a position far
+from the field of interest (off beam).</p>
+
+
+
+
+<p style="text-align: justify;">Broadly speaking the sky image is generated by taking the
+median frame of a set of images, i.e. by looking pixel by pixel to the
+median of all values, which discards those values receiving flux from the
+objects. However, before
+extracting the median, all
+frames have to be set to a common level. Generally all images are set
+to a common level by adding a zero offset. A scaling factor can also be
+used to obtain the same effect, this option works better when the sky
+background israpidly changing, like at the sunset or sunrise.
+&nbsp; </p>
+
+
+
+
+
+
+
+<p style="text-align: justify;">In the case of dithered images, there
+are three possibilities to obtain sky frames: combining all images to
+form a single image, classified by run number and additional by
+cycles.&nbsp;</p>
+
+
+
+
+
+<div style="text-align: justify;">
+
+<p class="iraf">There are two main parameters controlling the sky subtraction process. First, the parameter <span style="font-style: italic; font-weight: bold;">subsky</span> controls which type of sky images will be generated. There are three options: <span style="font-style: italic; font-weight: bold;">combsky</span>, will create the sky from the list of input images; <span style="font-style: italic; font-weight: bold;">usrsky</span>, will use a sky frame &nbsp;supplied by the user, or will generate from a list of images;&nbsp; <span style="font-style: italic; font-weight: bold;">none</span>, will not subtract any sky image.&nbsp;</p>
+
+
+
+
+
+<p> </p>
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+<table style="text-align: left; width: 621px; height: 487px;" border="0" cellpadding="2" cellspacing="2">
+
+
+
+
+
+
+
+  <tbody>
+
+
+
+
+
+
+
+    <tr align="center">
+
+
+
+
+
+
+
+      <td><img style="width: 617px; height: 444px;" alt="" src="skysub_comp.jpg"></td>
+
+
+
+
+
+
+
+    </tr>
+
+
+
+
+
+
+
+    <tr>
+
+
+
+
+
+
+
+      <td>Examples of sky subtraction by selecting all images
+(left panels) or grouping by run sequence (right panels). The top
+images correspond to the first images on the sequence, whereas the
+bottom ones correspond to the second ones. Note the strong gradient
+observed in the top left panel. &nbsp; </td>
+
+
+
+
+
+
+
+    </tr>
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+  </tbody>
+</table>
+
+
+
+
+
+
+
+<h4></h4>
+
+
+
+
+
+
+
+<hr style="width: 100%; height: 2px;">
+<h4><br>
+
+
+
+
+
+
+
+Removal of reset anomaly effect</h4>
+
+
+
+
+<p>
+
+
+In many cases several short exposure time images are taken in the same
+dithern position and saved together after&nbsp; coaveraging.
+&nbsp;In these cases images containing different gradient across
+the quadrant are put together and the gradient cannot be removed after
+sky subtraction. Therefore an additional correction is introduced, the
+vertical gradient subtraction. This correction consists of subtracting
+an average column across the whole detector, this average column is
+obtained by fitting low order polynomial (a constant or a straight
+line) along the rows.&nbsp; This correction can be&nbsp; done
+either along the whole row or per quadrant.
+</p>
+
+
+
+
+<h4 style="color: rgb(255, 204, 0);"><br>
+
+
+
+
+</h4>
+
+
+
+
+
+
+
+<p><img style="width: 961px; height: 547px;" alt="" src="reset_anomaly.jpg"><br>
+
+
+
+
+
+
+
+</p>
+
+
+
+
+
+
+
+<p class="iraf" style="text-align: justify;">This effect can be corrected using the
+task <span style="font-weight: bold; font-style: italic;">licvgrad</span> within the package limage. The following parameters can
+be modified:</p>
+
+
+
+
+
+<p class="iraf" style="text-align: center;"><img style="width: 503px; height: 173px;" alt="" src="lpar_licvgrad.jpg"></p>
+
+
+
+
+
+
+
+<p class="iraf" style="text-align: justify;">quad
+allows to select correction per quadrant or fitting complete rows.
+"naver" is the number of points in the sample to be average (positive
+values) or median (negative values). This correction can also be selected in the <span style="font-style: italic; font-weight: bold;">skycpars</span>, within ldedither parameters.&nbsp;</p>
+
+
+
+
+
+
+
+<hr style="width: 100%; height: 2px;">
+<h4><br>
+
+
+
+
+
+
+
+</h4>
+
+
+
+
+
+
+
+<h4>Field distortion correction</h4>
+
+
+
+
+
+<div style="text-align: justify;">The field distortion must be
+corrected in those cases when we are
+interested in the objects located near the border of the field of view
+or to have a good astrometric solution in the whole field of view.
+The images have to be corrected before final coaddition since the field
+distorsion is produced into each frame and because of the dithering
+pattern it affects differently the same sky region as registered at
+different locations on the instrument field of view.&nbsp;
+</div>
+
+
+
+
+
+
+
+<h4>
+
+Offset determination</h4>
+
+
+
+
+
+
+
+<p>
+
+The offset computation can be either manually or
+automatically.&nbsp;<br>
+
+
+
+
+In the manual procedure the user has to select one or more stars in the
+reference image, which is taken as the first image in the list of input images. Then
+the user has to mark in the remaining frames the first selected star,
+the stars selected will appear marked at the expected position on the
+display.&nbsp;<br>
+
+
+
+
+In the automatic procedure all star-like sources will be found in the
+reference image, then the positions of these stars will be matched in
+the rest of frames based on the expected offset for each image, which is computed from the coordinates writen in the header.</p>
+
+
+
+
+
+<p class="iraf">The relevant parameters to perform the offset computation in the <span style="font-style: italic; font-weight: bold;">ldedither</span> task are <span style="font-style: italic; font-weight: bold;">match</span>, which accepts the options <span style="font-style: italic;">"wcs"</span> for automatic determination; <span style="font-style: italic;">"manual"</span> but also the name of a <span style="font-style: italic;">file</span> containing two columns with the x and y offsets,&nbsp;previously determined. In case <span style="font-style: italic;">"wcs"</span> is selected, the parameter <span style="font-style: italic; font-weight: bold;">adjshift</span>
+have to set to yes if the offsets can be refined from star positions,
+or no if the coordinates writen in the header will be blindly used.
+&nbsp;</p>
+
+
+<p class="iraf">The offsets are always in integer pixels to avoid interpolating original image values. &nbsp;  </p>
+
+
+
+
+
+
+
+<h4><a class="mozTocH4" name="mozTocId841587"></a>Images
+coaddition</h4>
+
+
+
+
+
+
+
+<p><span style="color: rgb(0, 0, 0);"></span>All sky subtracted images
+can be&nbsp; coadded, once the offsets are computed. The combination of
+images is usually done by taking the average value (preferred to the
+median) of every pixel covering a given sky position.&nbsp; &nbsp;Here
+bad pixel masks are taken into account. Moreover during the
+combination&nbsp; the images can be set to a common average or median
+value, deviant pixels can be discarded by sigma clipping, or min/max
+rejection. &nbsp;&nbsp;</p>
+
+
+<p class="iraf">The parameters concerning image coaddition are <span style="font-style: italic; font-weight: bold;">ldedither.zero</span> to add a zero offset to each image, <span style="font-style: italic; font-weight: bold;">ldedither.scale</span> to use a scaling factor.&nbsp; The parameters <span style="font-style: italic; font-weight: bold;">ldedither.reject</span> permits to set rejection of pixels, <span style="font-style: italic; font-weight: bold;">ldedither.nlow</span> and <span style="font-style: italic; font-weight: bold;">ldedither.nhigh</span> to discard by min/max values a fraction of the input images.&nbsp;</p>
+
+
+<p></p>
+
+
+
+
+
+
+
+
+<hr style="width: 100%; height: 2px;">
+<h2><br>
+
+
+
+
+
+</h2>
+
+
+
+
+
+<h2 style="text-align: center;"><a name="Spectroscopic_Mode"></a>Spectroscopic
+Mode</h2>
+
+In spectroscopic mode the spectra are taken following a nodding
+pattern, in which the target is located in two (ABBA) or three (ABC...)
+different positions along the slit. In most cases the autoguider is
+used during the observations, unless they are very short exposures of
+bright sources.
+
+
+
+
+
+ 
+<h3>Auxiliary
+images:</h3>
+
+
+
+
+
+
+
+<h4><a class="mozTocH4" name="mozTocId6985"></a>Flat-field
+correction</h4>
+
+
+
+
+
+
+
+In general flat-field images will be taken using the same configuration
+(slit+grism combination) using the A&amp;G calibration lamps or by
+illumination of the dome (preferred in the K band to avoid absorption
+introduced by the optical system in the A&amp;G box). <br>
+
+<br>
+
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2">
+
+
+
+  <tbody>
+
+
+
+    <tr>
+
+
+
+      <td><img style="width: 988px; height: 444px;" alt="" src="flat_espec.jpg"></td>
+
+
+
+    </tr>
+
+
+
+    <tr>
+
+
+
+      <td>Flat-field image taken through the low resolution grism ZJ.</td>
+
+
+
+    </tr>
+
+
+
+  
+  
+  
+  </tbody>
+</table>
+
+<br>
+
+
+
+
+
+
+
+<p class="iraf"> The images can be combined using the task
+<span style="font-style: italic; font-weight: bold;">imcombine</span><span style="font-style: italic;"></span> and later <span style="font-style: italic; font-weight: bold;">response</span> to normalize with respect to the spectral response function.</p>
+
+
+
+
+
+
+
+<br>
+
+<h3><a class="mozTocH3" name="mozTocId217980"></a>Processing
+steps:</h3>
+
+
+
+
+
+
+
+The main processing steps for data obtained in spectroscopic mode are mentioned in the following scheme.&nbsp; <br>
+
+
+
+<br>
+
+
+
+<div style="text-align: center;"><img style="width: 540px; height: 800px;" alt="" src="spec.jpg"><br>
+
+
+
+
+
+
+
+</div>
+
+
+
+<p class="iraf"> All routines used to reduce the data in
+imaging mode are contained
+within the package <span style="font-style: italic; font-weight: bold;">lspect</span>. </p>
+
+
+
+
+
+
+
+<h4><a class="mozTocH4" name="mozTocId830109"></a><br>
+
+
+
+
+
+
+
+Sky subtraction</h4>
+
+
+
+
+
+
+
+<p><span style="color: rgb(255, 204, 0);"><span style="color: rgb(0, 0, 0);">The
+sky subtraction is done by simply subtracting the images corresponding
+to different nod pointings, in case of two points, A-B, in case of
+three points, the sky image is formed as the average of the two other
+positions B-(A+C)/2.&nbsp;</span> </span></p>
+
+
+
+
+
+<p><span style="color: rgb(255, 204, 0);"></span><img style="width: 813px; height: 386px;" alt="" src="ABBA.gif"></p>
+
+
+
+
+
+<span style="color: rgb(255, 204, 0);"><br>
+
+
+
+
+
+<br>
+
+
+
+
+
+<br>
+
+
+
+
+
+<img style="width: 844px; height: 516px;" alt="" src="skyABC.jpg"><br>
+
+
+
+
+
+<br>
+
+
+
+</span>
+<p class="iraf"><span style="color: rgb(255, 204, 0);"><span style="color: rgb(0, 0, 0);">The
+sky subtraction is perfomed
+within lirisdr using two tasks, depending on the number of nod points
+used. The tasks lspskynod and lspskynod3pt are used to subtract the sky
+spectrum in the two and three nods, respectively. The following
+parameters are available in the case of lspskynod:</span></span></p>
+
+<p style="text-align: center;" class="iraf"><span style="color: rgb(255, 204, 0);"><span style="color: rgb(0, 0, 0);"><img style="width: 499px; height: 226px;" alt="" src="lspskynod.jpg"> </span></span></p>
+
+<p class="iraf"><span style="color: rgb(255, 204, 0);"></span>Here the
+main parameters are the input image list, the output prexix name and
+the outlist file which will contain a list of the sky subtracted
+images, which is used as input for the next processing step. The
+background of the images can be set to zero after sky subtraction which
+help to discard&nbsp; bad pixels in the final coaddition. </p>
+
+<span style="color: rgb(255, 204, 0);">
+
+</span><span style="font-weight: bold;"><br>
+
+2-D Spectra coaddition<br>
+
+</span>
+<p>The result of the previous step is a set of images with most of the sky emission subtracted, obtained as A<sub>i</sub>-B<sub>i</sub>, and B<sub>i</sub>-A<sub>i</sub>,
+some intense sky lines residuals may still be present. The final
+coadded image will be obtained by&nbsp;shifting and combining all these
+images. Before doing this step, the curvature of the spectral lines has
+to be corrected, and in some cases the curvature of the object traces.</p>
+
+<p class="iraf">The &nbsp;routine which perform these steps within <span style="font-style: italic; font-weight: bold;">lspect</span> is called <span style="font-style: italic; font-weight: bold;">lspnodcomb</span>. The following parameters are available:</p>
+
+<p style="text-align: center;" class="iraf"> <img src="lspnodcomb.jpg" alt="" style="width: 502px; height: 281px;"><br>
+
+</p>
+
+<h4>Flat-field
+correction</h4>
+
+<p class="iraf">The flat-field correction is applied whenever a file is specified in the parameter <span style="font-weight: bold; font-style: italic;">flatcor</span><span style="font-style: italic;"></span>. The corrected images can be stored if a prefix is especified in the parameter <span style="font-weight: bold; font-style: italic;">ffpref</span><span style="font-style: italic;"></span>.<br>
+
+</p>
+
+<span style="color: rgb(255, 204, 0); font-weight: bold;">
+
+</span>
+<h4><a class="mozTocH4" name="mozTocId3783"></a>Wavelength
+calibration</h4>
+
+
+
+
+
+
+
+<p>The wavelength calibration has to be determined a priori from
+calibration lamp spectra taken with the same instrument configuration
+as the science frames. &nbsp;</p>
+
+<p class="iraf" style="text-align: justify;">The routine <span style="font-style: italic; font-weight: bold;">lspnodcomb</span> looks for two parameters in order to perform the wavelength calibration. The parameter <span style="font-style: italic; font-weight: bold;">trspec</span> indicates&nbsp;the name of file containing the calibration parameters and <span style="font-style: italic; font-weight: bold;">database</span>
+is the directory where to find it. The calibration parameters must be
+contained in a file with the format produced by the IRAF task <span style="font-style: italic; font-weight: bold;">fitcoords</span>. The program <span style="font-style: italic; font-weight: bold;">transform</span> is used internally to perform the correction.</p>
+
+
+
+<p><br>
+
+
+
+
+
+</p>
+
+
+
+
+
+<h4><a class="mozTocH4" name="mozTocId955612"></a>Curvature
+removal</h4>
+
+
+
+<p style="text-align: justify;">The spectrum of a point source appears
+curved onto the detector, this
+effect has to be taken into account in order to extract the flux of any
+source. In most cases the object spectrum shows a trace which can be
+later used to extract the flux.&nbsp;In particular, for the case of
+extended sources, the
+curvature of the spectrum
+has to be removed in order to have the spectrum aligned along detector
+rows. There is a procedure defined in the telescope designed to obtain
+the traces of point
+sources along the&nbsp; spatial direction of the slit, which consists
+of taking various spectra moving a bright star along the slit.&nbsp;</p>
+
+<p class="iraf" style="text-align: justify;">The routine <span style="font-style: italic; font-weight: bold;">lspnodcomb</span> corrects for the curvature if the name of the transformation file is given in the parameter <span style="font-style: italic; font-weight: bold;">trspat</span>.  </p>
+
+
+
+
+
+
+
+<h4><a class="mozTocH4" name="mozTocId333587"></a>
+Offset determination</h4>
+
+
+
+<p>
+
+
+
+The offset computation can be done either manually or
+automatically.&nbsp;</p>
+
+
+
+<p>In the manual procedure the user has to be determine previously the
+offsets along the slit, a task like splot could be used. It is obvious
+that the target traces must be well defined, which is not the case for
+very faint&nbsp; or for pure emission lines objects.&nbsp;</p>
+
+
+
+<p>In the automatic procedure the offsets between different exposures
+will be determined from the information writen in the header. In the
+case of LIRIS at the WHT this information is usually good enough given
+the good pointing of the telescope and the use of the autoguider.</p>
+
+<p class="iraf">A file containing the offsets which are applied in the
+automatic procedure can be obtained if the parameter shift is
+especified. In the case of manual procedure an input shift file has to
+be introduced in the parameter ishift.&nbsp;In the future there will an
+option to do this process interactively within the task
+lspnodcomb.&nbsp; </p>
+
+
+
+
+
+
+
+<h4><a class="mozTocH4" name="mozTocId669304"></a>The&nbsp; coaddition by itself</h4>
+
+<p>This is the final step before getting a final 2-D spectrum. The
+basic thing to do here is shift and combine the sky subtracted spectra.
+In the case of 2 point nodding the sky emission will be&nbsp; cancelled
+by definition, however in the case of 3-point nodding there is some
+residual due to the sky&nbsp; variability.&nbsp; In addition, it is
+possible to introduce bad pixel masking, do rejection of deviant pixel
+values. There is also a possibility to subtract residual sky lines by
+fitting a low order polynomial along the spatial direction. This option
+is mostly used when 3 point nodding was used.&nbsp; </p>
+
+<p class="iraf">Within the task <span style="font-style: italic; font-weight: bold;">lspnodcomb</span> the mask file is given in the parameter <span style="font-weight: bold; font-style: italic;">maskim</span>, the selection of rejection algorithms and its parameters is done inside the pset <span style="font-style: italic; font-weight: bold;">combspc</span>. The subtraction of residual sky lines is selected by the parameter <span style="font-style: italic; font-weight: bold;">doubles</span>.</p>
+
+<br>
+
+<h4>Extraction of the spectra </h4>
+
+<p class="iraf">The extraction of the spectra is done with the task <span style="font-style: italic; font-weight: bold;">apall</span>. The option <span style="font-style: italic; font-weight: bold;">background</span>
+must be set to none, since the spectrum has been already background
+subtracted. Another background subtraction will introduce additional
+noise in the data.</p>
+
+<h4>Telluric correction</h4>
+
+<p>In order to perform the telluric correction one needs to observe a
+reference star close to the science target, at similar airmass and
+close in time. The ideal situation is to have a reference star with a
+featureless spectrum, like O or B spectral types. However these
+spectral types are relatively difficult to find, the usual situation is
+to select a A0V (Vega- type star) or G2V (solar type) closeby from the
+Hipparcos database. In such cases the intrinsic &nbsp;spectrum of the
+reference star is well known. In order to decontaminate of the stellar
+spectral features, one first divides the observed spectrum by the
+theoretical spectrum convolved to the same resolution of the current
+observations.&nbsp;</p>
+
+<p>If the reference stars are of A0V spectral type the best choice is
+to use the routines described by Vacca et al, available as IDL
+program.&nbsp; &nbsp; </p><br>MULTIOBJECT SPECTROSCOPY<br>
+
+
+</body></html>

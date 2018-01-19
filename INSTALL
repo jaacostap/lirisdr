@@ -1,0 +1,5 @@
+Add the following lines in your loginuser.cl or login.cl:
+   set lirisdr = "mylocal$lirisdr/"
+   task lirisdr.pkg = "lirisdr$lirisdr.cl"
+   reset helpdb = (envget("helpdb") // ",lirisdr$lib/helpdb.mip")
+

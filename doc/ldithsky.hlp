@@ -1,0 +1,81 @@
+.help ldithsky Dec2003 liris_ql
+.ih
+NAME
+ldithsky -- combine dithered images
+.ih
+USAGE
+ldithsky input output
+.ih
+PARAMETERS
+.ls input
+Names of input dither images.
+.le
+.ls output
+name of output substracted images.
+.le
+.ls insky = "" 
+Name of input sky list image. If an image with the name specified by 
+this parameter exists it is used as a sky image that is subtracted 
+from a raw image before it is displayed or used for centroiding.
+.le
+.ls outsky = ""
+If a name is introduced the combined sky image will be saved under the name given by
+the outsky.
+.le
+.ls skycomb 
+Parameter set for sky image combination
+.le
+.ls tmpdir
+Temporary directory for file conversion
+.le
+.ls verbose
+Verbose
+.le
+.ls displsub
+display sky substraction?
+.le
+
+.ih
+DESCRIPTION
+Create sky images from a list of images taken following a dithern pattern.
+This option is considered when user do not set \fRsubsky\fB to "none". Else a sky
+is used by ldithsky task to substract sky of images.
+If subsky was set to "combsky", then the median of all input images will be used
+to generate the sky image and if "usrsky" \fBinsky\fR sky image list will be
+combinated and result used like sky. Any scaling can be introduced but is probably
+only necessary if the data was taken with strongly variable sky background;
+for example for dithers taken close to twilight. 
+When "combsky" option, sky substraction process can be made in first and second step.
+Resulting sky image is saved if \fBoutsky\fR is introduced. The sky image is made in
+ldithsky task combining images and minmax pixel rejection with 5% low pixels and 25% high
+pixels.The sky image is then subtracted from each input image.
+
+
+
+
+.ih
+INDIVIDUAL STAR MASKS
+When image sky is made the presence of high bright stars can introduce wrong 
+objects in the sky image. For prevent this error a mask hidden stars when sky
+image is made. To make star mask the result image is used because stars can be 
+detected better than in input images. Star mask can be made for coadded image with
+lstarmask task and also for individual image if position of image known in 
+global image cutting right portion of the global mask image.
+
+
+
+
+.ih
+EXAMPLES
+To combine a 5 point dither contained in list1 image list.
+
+idedither @list1 result.fits
+.ih
+TIME REQUIREMENTS
+.ih
+BUGS
+
+.ih
+SEE ALSO
+imcombine llistdiff
+.endhelp

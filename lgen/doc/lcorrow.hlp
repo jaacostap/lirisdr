@@ -1,0 +1,130 @@
+.help lcorrow Jun2004 liris_ql
+.ih
+NAME
+lcorrow	  -- correct system adquisition errors
+.ih
+USAGE
+Correct pixel deplacement during adquisition
+.ih
+PARAMETERS
+.ls input
+Input image
+.le
+.ls output
+Output corrected image
+.le
+.ih           
+
+DESCRIPTION
+This task use a C language task (corrow_(.arch)) to correct wrong bad pixel 
+map of image done during adquisitions since 2002. We consider the quadrant
+distribution:
+.nf
+     _________
+    |    |    |
+    |  4 |  3 |
+    |____|____|
+    |    |    |
+    |  1 | 2  |
+    | ___|____|
+
+.fi
+
+Each quadrants have an adquisition buffer independiently. This buffers was bad
+configurated and data of image was deplaced by two pixels in the first
+quadrant and by two pixels in the other quadrants. The C task read image and
+correct each quadrant separatly deplacing corresponding pixels and adding first
+pixels of the buffer in last positions. 
+For example we can check quadrant 1 problem.
+
+.nf
+
+    Correct image:
+     _________ _________ _________ _________
+    |    |    |	 |	|    |    |    |1024|
+    |             .............        | X  |
+    |____|____|____|____|____|____|____|1024|
+    |          	  	                    |
+    |             .............             |
+    |_______________________________________|
+    |    |    |	 |              |    |    |
+    |514 |515 |516 |              |1023|1024|
+    |____|____|____|______________|____|____|
+    |    |    |	 |	          |    |    |
+    |  1 | 2  |  3 |     ....     |511 |512 |
+    |____|____|____|______________|____|____|
+
+  		    
+  Read buffer:  
+    	__________________________________________________________________
+	|    |    |    |  		|    |    | 		 |1024|1024|
+	|  1 | 2  |  3 |     ....	|511 |512 |     ....	 |  X | X  |
+	|    |    |    |  		|    |    | 		 |1024|1024|
+	|    |    |    |  		|    |    | 		 | - 1|    |
+    	|____|____|____|______________|____|____|______________|____|____|
+    
+    Acquired image:
+     _________ _________ _________ _________
+    |    |    |	 |	|    |    |    |1024|
+    |             .............        | X  |
+    |____|____|____|____|____|____|____|1024|
+    |          	  	                -2  |
+    |             .............             |
+    |_______________________________________|
+    |    |    |	 |              |    |    |
+    |511 |512 |513 |              |1021|1022|
+    |____|____|____|______________|____|____|
+    |    |    |	 |	          |    |    |
+    | XX | XX |  1 |     ....     |509 |510 |
+    |____|____|____|______________|____|____|
+
+  		    
+  Read buffer:  
+    	__________________________________________________________________
+	|    |    |    |  		|    |    | 		 |1024|1024|
+	| XX |XX  |  1 |     ....	|509 |510 |     ....	 |  X | X  |
+	|    |    |    |  		|    |    | 		 |1024|1024|
+	|    |    |    |  		|    |    | 		 | - 3| - 2|
+    	|____|____|____|______________|____|____|______________|____|____|
+    
+    Corrected image:
+     _________ _________ _________ _________
+    |    |    |	 |	|    |    |    |1024|
+    |             .............        | X  |
+    |____|____|____|____|____|____|____|1024|
+    |          	  	                -2  |
+    |             .............             |
+    |_______________________________________|
+    |    |    |	 |              |    |    |
+    |511 |512 |513 |              |1021|1022|
+    |____|____|____|______________|____|____|
+    |    |    |	 |	          |    |    |
+    | XX | XX |  1 |     ....     |509 |510 |
+    |____|____|____|______________|____|____|
+
+  		    
+  Read buffer:  
+         ___________________________________________________________ ____
+         |    |                                                    |    |
+    	___|____|____________________________________________________V____V__
+	|    |    |    |  		|    |    | 	|1024|1024|    |    |
+	| 1  | 2  |  3 |     ....	|511 |512 | ....  |  X | X  | XX | XX |
+	|    |    |    |  		|    |    | 	|1024|1024|    |    |
+	|    |    |    |  		|    |    | 	| - 3| - 2|    |    |
+    	|____|____|____|______________|____|____|_______|____|____|____|____|
+ 
+
+.fi
+
+
+
+.ih
+EXAMPLES
+
+.ih
+BUGS
+no bugs, only features.
+.ih
+SEE ALSO
+lfixpix
+.endhelp

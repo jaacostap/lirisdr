@@ -1,0 +1,42 @@
+.help lcycsky May2009 lirisdr.limage
+.ih
+NAME
+lcycsky -- create sky images using dither cycles
+.ih
+USAGE
+lcycsky input output nditpts
+.ih
+PARAMETERS
+.ls input
+List of images to be combined and create sky images.
+.le
+.ls output
+Prefix of output sky subtracted images.
+.le
+.ls nditpts 
+Number of dither points used during observations
+.le
+.ls outlist = "" 
+Name of a file containing a list of sky subtracted images
+.le
+.ih
+DESCRIPTION
+Each cycle is considered to be complete after nditpts frames corresponding to the same
+run number. 
+It will create one sky image per cycle, 
+The following  steps are performed:
+.ls Pre-post treatment: 
+Each input image are pre-post treated and image format are transformed at the 
+same format which consist in one single image without extension.
+.le
+
+.ih
+BUGS
+When using the "wcs" method to automatically combine images the
+determined offsets are often (slightly) wrong. This is caused by inexact
+telescope pointing. A workaround is to use interactive instead or adjustment.
+
+.ih
+SEE ALSO
+lsubdithsky lmksky
+.endhelp

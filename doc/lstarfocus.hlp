@@ -1,0 +1,43 @@
+.help lstarfocus Jan2004 liris_ql
+.ih
+NAME
+lstarfocus -- wrapper for nmisc/starfocus
+.ih
+USAGE
+Calculate focus using stars of input images
+.ih
+PARAMETERS
+.ls images
+List of focusrun images
+.le
+.ls skyimg = ""
+sky image
+.le
+.ls logfile = "STDOUT"
+Logfile
+.le
+.ls tmpdir = )_.tmpdir
+Temporary directory for file conversion
+.le
+.ls focopt = ""
+Configuration starfocus parametres
+.le
+.ls verbose = no
+Verbose
+.le
+
+.ih                 
+
+DESCRIPTION
+
+
+.ih
+EXAMPLES
+
+.ih
+BUGS
+no bugs, only features.
+.ih
+SEE ALSO
+
+.endhelp

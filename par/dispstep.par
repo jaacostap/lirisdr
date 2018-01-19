@@ -1,0 +1,11 @@
+# Parameter file for lspectr.dispres (liris_ql)
+dispsubsky,b,h,no,,,"Display images substracted of sky"
+disptransf,b,h,no,,,"Display corrected images"
+dispsubresidu,b,h,no,,,"Display images substracted of residual sky"
+dispcompress,b,h,no,,,"Display 1D spectral images"
+dispcross,b,h,no,,,"Display 1D spectral image correlations"
+dispres,b,h,no,,,"Display image result"
+dispext,b,h,yes,,,"Interactive spectral extraction"
+dispextref,b,h,no,,,"Interactive spectral extraction when combine option"
+dispsel,b,h,yes,,,"Interactive visual spectral selection"
+dispstat,b,h,no,,,"Interactive statistical spectral selection"

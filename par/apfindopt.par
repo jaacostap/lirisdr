@@ -1,0 +1,14 @@
+# Parameter file for lspctapfind.apfindpopt (liris_ql)
+
+apertures,s,h,"",,,Apertures
+references,s,h,"",,,"Reference images
+"
+interactive,b,h,no,,,Run task interactively?
+find,b,h,yes,,,Find apertures?
+recenter,b,h,no,,,Recenter apertures?
+resize,b,h,no,,,Resize apertures?
+edit,b,h,yes,,,"Edit apertures?
+"
+minsep,r,h,5.,1.,,Minimum separation between spectra
+maxsep,r,h,1000.,1.,,Maximum separation between spectra
+order,s,h,"increasing","increasing|decreasing",,Order of apertures

@@ -1,0 +1,63 @@
+.help lspctoffset Jan2004 liris_ql
+.ih
+NAME
+lspctoffset -- search offset of spectra image 
+.ih
+USAGE
+Select spectra with enougth SNR and calculate offset of spectras in 2D images
+.ih
+PARAMETERS
+.ls input
+Name of input spectral images
+.le   
+.ls output 
+Name of output choosen spectral image list
+.le
+.ls offsetf 
+Name of image offset file
+.le
+.ls predisp = yes
+Select 1D average spectral
+.le
+.ls postdisp = yes
+Select spectral correlated signals
+.le
+.ls numimages
+Return the number of images contained in final list 
+.le verbose = no
+Verbose
+.le
+.ls tmpdir = )_.tmpdir
+Temporary directory
+.le 
+.ih        
+DESCRIPTION
+This task provides spectra offset of input images. It allow preselect good SNR
+spectra using lspecplot before calculate offset. List of selected images are
+return in /fBoutput/fR parametre. Offset of their is contained in /fBoffsetf/fR
+file. If /fBpredisp/fR parametre is put to no, no selection is done and offset
+for all input images is calculated. An other selection be able to be posible at
+the offset calcule process if /fBpostdisp/fR parametre is yes. The espectra and
+offset returned are also total selected spectra. /fBnumimages/fR contain the
+number of spectra selected when process is finished.
+
+Calcule offset process consist in correlation of compress profile spectra. Using
+/fBDISPAXIS/fR image header field task compress spectra with blkavg task in the
+spectra direction. If no DISPAXIS parametre is found default spectra direction
+is ordinate axis. The first compressed images of selected list is considered as
+reference image. It is correlated with all images of this list. If images
+correspond to the same spectra, compressed spectras have the same shape and
+correlation have a maximum that show offset of images. Else the task returned
+offset corresponding to the first maximum. Offset of image A is difference 
+between maximum of reference-reference and A-reference correlations.
+
+.ih
+EXAMPLES
+
+.ih
+BUGS
+no bugs, only features.
+.ih
+SEE ALSO
+blkavg,crosscor,lspecplot
+.endhelp

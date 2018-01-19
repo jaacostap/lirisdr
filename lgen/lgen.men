@@ -1,0 +1,8 @@
+Menu for the package lirisdr.lgen
+ 
+        lcpixmap - Correct not proper pixel mapping
+        ldisplay - Display LIRIS image taken into account different formats 
+         lrctalk - Correct row cross talk 
+      lframediff - Subtract pre-integration frame from post-integration
+      limexamine - Call imexamine without needing frame extensions     
+       lshiftwcs - Compute offset between frames based on telescope coordinates  

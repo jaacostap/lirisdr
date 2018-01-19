@@ -1,0 +1,8 @@
+# Root task entry for the package help tree.  Defines `<package>'
+# as both a task and a package in the help database.
+
+lirisdr		men  = lirisdr$lirisdr.men,
+		hlp  = lirisdr$lirisdr.men,
+		sys  = lirisdr$lirisguide.hlp,
+		pkg  = lirisdr$lirisdr.hd,
+		src  = lirisdr$lirisdr.cl

@@ -1,0 +1,12 @@
+# Global environment definitions for the LIRIS_QL packages.
+
+set   pkglibs                 = "liris_ql$bin(arch)/,liris_ql$lib/"
+set   lirisbin                = "liris_ql$bin(arch)/"
+set   lirislib                = "liris_ql$lib/"
+
+set 	lgen		      = "liris_ql$lgen/"
+set 	lutil 	              = "liris_ql$lutil/"
+set 	lspect	              = "liris_ql$lspect/"
+set 	limage 	              = "liris_ql$limage/"
+
+keep

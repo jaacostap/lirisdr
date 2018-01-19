@@ -1,0 +1,19 @@
+# Parameter file for lreduction.dithopt (liris_ql)
+
+subsky,s,h,"combsky",,,"Subtract sky (none|usrsky|combsky|dispsky)"
+insky,s,h,"",,,"name of input sky image"
+match,s,h,"wcs",,,"Method used to match images (wcs|manual|pick1)"
+
+# Correction parameter files
+inmask,s,h,"",,,"name of common mask file"
+intrans,s,h,"",,,"name of geometric distortion correction file"
+corrow,b,h,no,,,"Change bad rows?"
+intprow,b,h,no,,,"Display image result"
+stmask,b,h,yes,,,"Make and apply individual star masks"
+adjshift,b,h,yes,,,"Adjust the calculated shift from image headers"
+
+scale,s,h,"none",,,"Scale images (none|mode|median|mean|<keyword>)"
+
+# imcentroid parameters
+bigbox,i,h,17,,,"Size of the coarse centering box"
+sherror,r,h,5.,,,"Maximum error in pixels on offset"

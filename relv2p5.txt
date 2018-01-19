@@ -1,0 +1,6 @@
+RELEASE NOTES V2.5
+  It is recommended to do unlear lirisdr to avoid conflict with previous version
+  - improved object masking for ldedither routine
+  - possibility to save an exposure image and rejection cube for ldedither
+  - simplified use of lspnodcomb (input file contains only images 
+    to be combined)

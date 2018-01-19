@@ -1,0 +1,71 @@
+.help lstatist Jan2004 liris_ql
+.ih
+NAME
+lstatist -- return statistic values of input image
+.ih
+USAGE
+Study statistical image characteristics
+.ih
+PARAMETERS
+.ls image
+Input image(s)
+.le
+.ls nsigrej = 5.
+Number of sigmas for limits
+.le
+.ls maxiter = 10
+Maximum number of iterations
+.le
+.ls print = yes
+Print final results?
+.le
+.ls verbose = no
+Show results of all iterations?
+.le
+.ls addheader = yes
+Put returned values into image header keywords?
+.le
+.ls lower = INDEF/upper = INDEF
+Initial lower and upper limits for data range
+.le
+.ls mean
+Returned value of mean
+.le
+.ls sigma
+Returned value of sigma
+.le
+.ls variance
+Returned value of variance (sigma**2)
+.le
+.ls median
+Returned value of median
+.le
+.ls quart1/quart2
+Returned value of first and second quarter
+.le
+.ls signoise
+Returned value of noise sigma
+.le
+.ls valmode
+Returned value of mode
+.le
+.ls oneparam = "all"
+Find iterative value of this one parameter only
+.le
+
+
+.ih     
+
+DESCRIPTION
+
+
+.ih
+EXAMPLES
+
+.ih
+BUGS
+no bugs, only features.
+.ih
+SEE ALSO
+
+.endhelp

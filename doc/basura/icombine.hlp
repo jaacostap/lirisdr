@@ -1,0 +1,69 @@
+.help icombine Aug2000 ingrid_ql
+.ih
+NAME
+icombine -- Combine images using various algorithms
+.ih
+USAGE
+icombine input output
+.ih
+PARAMETERS
+.ls input
+List of input images to combine.
+.le
+.ls output
+Name of combined image.
+.le
+.ls subdark = no
+Subtract a dark image from any input image that is in raw INGRID format ?
+.le
+.ls darkimg = ""
+Name of dark image to subtract.
+.le
+.ls verbose = no
+Be (very) verbose ?
+.le
+.ls info = yes
+Show terse information about progress. If verbose is yes, info is set to yes
+automatically.
+.le
+.ls tmpdir = "tmp$"
+location of directory for temporary files.
+.le
+.ls imcombine parameters
+All the parameters from the imcombine task are replicated in icombine.
+Please look at the \fBimcombine\fR help page for their description.
+.le
+.ih
+DESCRIPTION
+This task is a wrapper for the imcombine task. For more information, please
+see the \fBimcombine\fR help page.
+
+icombine checks if the output image exists already. If it does, an error
+message is shown and that task aborts.
+
+The task will post-pre subtract all input images if necessary before they are
+combined.
+.ih
+EXAMPLES
+Combine all images listed in the file "in" and write the combined image to
+the file "combined"
+
+icombine @in combined
+
+For examples using the \fBimcombine\fR parameters please see the
+\fBimcombine\fR help page.
+.ih
+BUGS
+no bugs, only features.
+
+\fBNote:\fR
+If a mixed input list of raw and already post-pre subtracted images is used
+the subtraction of the dark image will only be applied to the raw images.
+
+\fBNote:\fR
+If verbose is set to yes, then the logfile parameter for the call to imcombine
+is set to STDOUT, overriding the icombine.logfile parameter.
+.ih
+SEE ALSO
+imcombine
+.endhelp

@@ -1,0 +1,6 @@
+# liris_im package parameter file
+version,s,h,"21may2004"
+# package wide parameters
+scale,r,h,0.25,,,"scale in arcsec/pixel"
+tmpdir,s,h,"./",,,"temporary directory"
+stddir,s,h,"liris_ql$std/",,,"Liris database directory"

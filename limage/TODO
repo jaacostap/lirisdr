@@ -1,0 +1,21 @@
+Junio 2011 
+- hacer correccion de gradiente previa a la sustraccion de cielo, aunque despues de 
+  hacer el flat-field
+
+##########################################################
+
+- usar ahedit para introducir coordenadas WCS en la cabecera
+
+- usar valor del fondo almacenado en cabecera para combinar las imagenes
+  con los valores aproximados de cuentas si usamos como algoritmo
+  de rechazo ccdclip 
+
+- usar pesos basados en la fotometria para combinar imagenes
+
+- introducir nueva forma de sustraer cielo usando por separado run 1, 2 y el
+resto
+
+- modificar licvgrad para que se pueda usar en modo polarimetria, se trata de
+resolver cual es el valor de las secciones despues de cortar la imagen. 
+
+

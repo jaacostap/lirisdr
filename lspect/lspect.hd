@@ -1,0 +1,26 @@
+# Help directory information for LIRISDR:LSPECT
+
+lspect		hlp="lspect$lspect.men"
+
+usage		hlp=lspect$doc/usage.hlp
+internals	hlp=lspect$doc/internals.hlp
+
+imgaccess   	hlp=liris_ql$doc/imgaccess.hlp,		src=imgaccess.cl
+imnumber    	hlp=liris_ql$doc/imnumber.hlp,		src=imnumber.cl
+lstatist    	hlp=liris_ql$doc/lstatist.hlp,		src=lstatist.cl
+lcheckfile  	hlp=liris_ql$doc/lcheckfile.hlp, 	src=lcheckfile.cl
+lconstlist  	hlp=liris_ql$doc/lconstlist.hlp, 	src=lconstlist.cl
+ldedither   	hlp=liris_ql$doc/ldedither.hlp,		src=ldedither.cl
+ldisplay    	hlp=liris_ql$doc/ldisplay.hlp,		src=ldisplay.cl
+ldispstars  	hlp=liris_ql$doc/ldispstars.hlp, 	src=ldispstars.cl
+lfileaccess	hlp=liris_ql$doc/lfileaccess.hlp,	src=lfileaccess.cl
+lfilename	hlp=liris_ql$doc/lfilename.hlp,		src=lfilename.cl
+lfixpix     	hlp=liris_ql$doc/lfixpix.hlp,		src=lfixpix.cl
+lframediff  	hlp=liris_ql$doc/lframediff.hlp, 	src=lframediff.cl
+limfiles    	hlp=liris_ql$doc/limfiles.hlp,		src=limfiles.cl
+lmarkstar   	hlp=liris_ql$doc/lmarkstar.hlp,		src=lmarkstar.cl
+lmaskaccess 	hlp=liris_ql$doc/lmaskaccess.hlp,	src=lmaskaccess.cl
+lreduction	hlp=liris_ql$doc/lreduction.hlp, 	src=lreduction.cl
+lshiftwcs   	hlp=liris_ql$doc/lshiftwcs.hlp,		src=lshiftwcs.cl
+lspectr     	hlp=liris_ql$doc/lspectr.hlp,		src=lspectr.cl
+lstarmask   	hlp=liris_ql$doc/lstarmask.hlp,		src=lstarmask.cl

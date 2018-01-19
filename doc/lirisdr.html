@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta content="text/html; charset=ISO-8859-1"
+ http-equiv="content-type">
+  <title>LIRIS DATA REDUCTION PACKAGE</title>
+</head>
+<body>
+<h1>lirisdr - An IRAF package for LIRIS data reduction</h1>
+<h2>The problem of observing in the near infrared range using
+ground-based telescopes:</h2>
+The main trouble to solve is the high background coming from the Earth
+atmosphere, there are different terms of contribution: the OH emission
+lines and the airglow produced in the high layers of the atmosphere
+dominating in the H band, the thermal radiation originated at the
+telescope and its environment, increasing as moving to the red extreme
+of the K band. <br>
+<br>
+<h2>Initial steps:</h2>
+&nbsp;&nbsp;&nbsp; The first step is to subtract the bias level. Each
+pixel of common infrared detectors are usually read following the
+scheme: <span style="color: rgb(204, 51, 204);">reset</span>-<span
+ style="color: rgb(255, 0, 0);">read</span>-<span
+ style="color: rgb(0, 153, 0);">integrate</span>-<span
+ style="color: rgb(255, 0, 0);">read</span>.&nbsp; In general data are
+stored after subtraction of the first read level.&nbsp; If this is not
+the case one has to perform this step.<br>
+Currently, in the case of LIRIS data&nbsp; there is a pixel mapping
+problem which has to be corrected before any other processing steps.
+There is a C routine which performs this correction for a single file.
+This routine can also be called from IRAF for a list of files, for
+example:<br>
+<span style="font-style: italic; font-weight: bold;">lirisdr&gt;</span>
+<span style="font-style: italic;">lcpixmap</span> <span
+ style="font-style: italic;">@inframes "c" out=outframes</span>&nbsp; <br>
+<br>
+<h2>Imaging mode<br>
+</h2>
+The most common observing mode is to follow a dithern pattern. The
+reduction steps to be followed are: <br>
+<ul>
+  <li>flat-field correction</li>
+  <li>subtraction of sky image</li>
+</ul>
+<ul style="margin-left: 40px;">
+  <li>construct and subtract sky image</li>
+  <li>correct vertical gradient</li>
+</ul>
+<ul>
+  <li>correct geometrical distorsion is required</li>
+</ul>
+<ul>
+  <li>combine sky subtracted images </li>
+</ul>
+An sky image can be obtained as the median value for each pixel from
+the whole set of&nbsp; frames.&nbsp; <br>
+The program which perform the whole process is called <span
+ style="font-style: italic;">ldedither</span>. <br>
+<br>
+<br>
+<br>
+</body>
+</html>

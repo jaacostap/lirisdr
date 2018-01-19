@@ -1,0 +1,8 @@
+# liris_im package parameter file
+version,s,h,"3Oct2004"
+# package wide parameters
+tmpdir,s,h,"./",,,"temporary directory"
+stddir,s,h,"lirisdr$std/",,,"Liris database directory"
+bpmdb,s,h,"lbpmdb",,,"Liris database of bad pixel masks"
+bcmdb,s,h,"lbcmdb",,,"Liris database of column pixel masks"
+

@@ -1,0 +1,6 @@
+13-Jul-09
+ se atasca cuando se selecciona use_subpix y shift="wcs"
+ 
+13-Jul-09   
+ no tiene definida la variable md cuando se le dice que no haga 
+ segunda subtraccion de cielo.

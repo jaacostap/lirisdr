@@ -1,0 +1,10 @@
+# Parameter file to be used in lpdedither when calling lgeotran through lpdedither  (lirisdr.limage) 
+database,s,h,")_.gdistdb",,,"Directory containing geometrical distortion correction files "
+xstr0,r,h,0.95,0.,1.,"Streching factor along x-axis for pol. vec. 0"
+ystr0,r,h,0.95,0.,1.,"Streching factor along y-axis for pol. vec. 0 "
+xstr90,r,h,0.95,0.,1.,"Streching factor along x-axis for pol. vec. 90"
+ystr90,r,h,0.95,0.,1.,"Streching factor along y-axis for pol. vec. 90"
+xstr135,r,h,0.95,0.,1.,"Streching factor along x-axis for pol. vec. 135"
+ystr135,r,h,0.95,0.,1.,"Streching factor along y-axis for pol. vec. 135"
+xstr45,r,h,0.95,0.,1.,"Streching factor along x-axis for pol. vec. 45"
+ystr45,r,h,0.95,0.,1.,"Streching factor along y-axis for pol. vec. 45"

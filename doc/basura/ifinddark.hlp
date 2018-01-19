@@ -1,0 +1,24 @@
+.help ifinddark Aug2000 ingrid_ql
+.ih
+NAME
+ifinddark -- description
+.ih
+USAGE
+ifinddark args
+.ih
+PARAMETERS
+.ls parameter
+Description
+.le
+.ih
+DESCRIPTION
+.ih
+EXAMPLES
+.ih
+TIME REQUIREMENTS
+.ih
+BUGS
+no bugs, only features.
+.ih
+SEE ALSO
+.endhelp

@@ -1,0 +1,39 @@
+.help imarkstar Aug2000 ingrid_ql
+.ih
+NAME
+imarkstar -- mark a star (or position) in an image
+.ih
+USAGE
+imarkstar input
+.ih
+PARAMETERS
+.ls input
+file name of data file to mark star on.
+.le
+.ls center = "centroid"
+Description
+.le
+.ls x = 0.
+Description
+.le
+.ls y = 0.
+Description
+.le
+.ls key = ""
+Description
+.le
+.ls verbose = no
+Description
+.le
+.ih
+DESCRIPTION
+.ih
+EXAMPLES
+.ih
+TIME REQUIREMENTS
+.ih
+BUGS
+no bugs, only features.
+.ih
+SEE ALSO
+.endhelp

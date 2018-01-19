@@ -1,0 +1,91 @@
+.help istarfocus Apr2000 ingrid_ql
+.ih
+NAME
+istarfocus -- Measure focus variations using stellar images
+.ih
+USAGE
+istarfocus images
+.ih
+PARAMETERS
+.ls images
+List of images taken with the focusrun command.
+.le
+.ls skyimg = ""
+name of sky image to be subtracted from each input image. If this field is
+empty, no sky subtraction will be done.
+.le
+.ls tmpdir = "tmp$"
+name of directory to hold temporary files
+.le
+.ih
+DESCRIPTION
+This task is a wrapper for the nmisc.starfocus task. For a more detailed
+description, please look at the starfocus help page.
+.ih
+CURSOR COMMANDS
+When selecting objects with the image cursor the following commands are
+available.
+
+.nf
+?  Page cursor command summary
+g  Measure object and graph the results.
+m  Measure object.
+q  Quit object marking and go to analysis of all measurements.
+
+:show  Show current results.
+.fi
+
+When in the interactive graphics the following cursor commands are available.
+All plots may not be available depending on the number of focus values and
+the number of stars.
+
+.nf
+?  Page cursor command summary
+a  Spatial plot at a single focus
+b  Spatial plot of best focus values
+d  Delete star nearest to cursor
+e  Enclosed flux for stars at one focus and one star at all focus
+f  Size and ellipticity vs focus for all data
+i  Information about point nearest the cursor
+m  Size and ellipticity vs relative magnitude at one focus
+n  Normalize enclosed flux at x cursor position
+o  Offset enclosed flux to by adjusting background
+p  Radial profiles for stars at one focus and one star at all focus
+q  Quit
+r  Redraw
+s  Toggle magnitude symbols in spatial plots
+t  Size and ellipticity vs radius from field center at one focus
+u  Undelete all deleted points
+x  Delete nearest point, star, or focus (selected by query)
+z  Zoom to a single measurement
+<space> Step through different focus or stars in current plot type
+
+
+:beta <val>     Beta parameter for Moffat fit
+:level <val>    Level at which the size parameter is evaluated
+:overplot <y|n> Overplot the profiles from the narrowest profile?
+:radius <val>   Change profile radius
+:show <file>    Page all information for the current set of objects
+:size <type>    Size type (Radius|FWHM)
+:scale <val>    Pixel scale for size values
+:xcenter <val>  X field center for radius from field center plots
+:ycenter <val>  Y field center for radius from field center plots
+
+The profile radius may not exceed the initial value set by the task
+parameter.
+.fi
+
+.ih
+EXAMPLES
+Analyze a focusrun consisting of 10 images which are stored in the files s1.fit
+to s10.fit :
+
+istarfocus s1,s2,s3,s4,s5,s6,s7,s8,s9,s10
+.ih
+BUGS
+no bugs, only features.
+.ih
+SEE ALSO
+.nf
+starfocus iframediff
+.endhelp

@@ -1,0 +1,89 @@
+.help lspctapall March2004 liris_ql
+.ih
+NAME
+lspctapall -- extract spectras from list image and combine selected spectra
+.ih
+USAGE
+Extract 1D spectra of 2D images
+.ih
+PARAMETERS
+.ls input
+Spectral input image list
+.le
+.ls outspectr
+Prefix of result spectres
+.le
+.ls outlist
+Name of spectra list
+.le
+.ls output = ""
+Combined spectra image
+.le
+.ls references = ""			[combine|<keywords>]
+Reference images
+.le
+.ls apertures = ""
+Apertures
+.le
+.ls typespct = "AB"			[AB|single]
+Type of spectral image 
+.le
+.ls numspct = 1
+Number of spectres to extract
+.le
+.ls line = INDEF
+Dispersion line
+.le
+.ls nsum = 10
+Number of dispersion lines to sum or median
+.le
+.ls interap = no
+Interactive spectral extraction
+.le
+.ls interapref = no
+Interactive spectral extraction when combine option
+.le
+.ls statsel = yes
+Interactive spectral statistical selection
+.le
+.ls intersel = yes
+Interactive spectral plot selection
+.le
+.ls verbose = no
+Verbose
+.le
+.ls apallopt = ""
+Apall parametre configuration
+.le
+.ls apallplot = ""
+lspecplot parametre configuration
+.le
+.ls apstatplot = ""
+lspecplot parametre configuration
+.le
+.ls apcomb = ""
+imcombine parametre configuration
+.le
+.ls tmpdir = )_.tmpdir
+Temporary directory for file conversion
+.le
+.ls imnum
+Return minimum number of output spectres
+.le
+              
+
+
+.ih           
+DESCRIPTION
+
+
+.ih
+EXAMPLES
+
+.ih
+BUGS
+no bugs, only features.
+.ih
+SEE ALSO
+
+.endhelp

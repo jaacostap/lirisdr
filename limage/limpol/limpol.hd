@@ -1,0 +1,8 @@
+# Help directory information for LIMPOL
+
+limpol		hlp="limpol$limpol.men"
+
+usage		hlp=limpol$doc/usage.hlp
+internals	hlp=limpol$internals.hlp
+
+lpdedither   	hlp=limpol$lpdedither.hlp,		src=lpdedither.cl

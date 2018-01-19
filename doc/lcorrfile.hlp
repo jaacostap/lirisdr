@@ -1,0 +1,126 @@
+.help lcorrfile Jan2004 liris_ql
+.ih
+NAME
+lcorrfile -- Search in database correction files and mask images 
+             corresponding to input image
+.ih
+USAGE
+Search default files asigned to an image.
+.ih
+PARAMETERS
+.ls input 
+Name of input image
+.le
+.ls fbpmask = ")_.bpmdb"
+bad pixel mask database file
+.le
+.ls fbcmask = ")_.bcmdb"
+bad column mask database file
+.le
+.ls fgeodist = ")_.gdistdb"     
+geometric correction database file
+.le
+.ls ftransf = ")_.fcdb" 
+spatial and spectral transform database file
+.le
+.ls bpmask 
+output bad pixel mask file name (none|unknow|<name>)
+.le
+.ls bcmask 
+output bad column mask file name (none|unknow|<name>)
+.le
+.ls geodist 
+output geometric correction file name (none|unknow|<name>)
+.le
+.ls trspat = "fcZJspt_030201"
+output spatial correction file name (none|unknow|<name>)
+.le
+.ls trspec 
+output spectral correction file name (none|unknow|<name>)
+.le
+.ls tmpdir = ")_.tmpdir"
+Temporary directory for file conversion
+.le
+.ls stddir = ")_.stddir"
+Parametre directory for transformations
+.le
+.ls verbose = no
+Be verbose ?
+.le
+.ih
+DESCRIPTION
+Observed images are distortioned because optic and other systems interaction. 
+Almost, problems with CCD and adquisition system can appear in images. All these
+perturbations can be corrected with special functions that use some files made
+during system analyse. Corrections and files, depend of image type and
+observation configuration. So, information of associated files can be contained
+in database files.
+This task allow find (if they exist) automatically in the database files, 
+wright files for each kind of correction and mask of badpixel mask.
+
+The parameters /fBfbpmask/fR, /fBfbcmask/fR, /fBfgeodist/fR and /fBftransf/fR 
+contain information about database files. Results are returned in /fBbpmask/fR, 
+/fBbcmask/fR, /fBgeodis/fR, /fBtrspat/fR and /fBtrspec/fR variables. When no file
+is found in corresponded database file "unknown" value is return. When image 
+type does not correspond to parametre "none" is returned.
+.ih
+
+CORRECTIONS
+Correction depend of image type. When image is dither image corrected correction
+is geometric distortion correction introduced by the telescope. Distortion is
+also related with camera orientation. 
+.ih
+
+FORMAT OF CORRECTION FILE NAMES AND MASK NAMES 
+Todos los ficheros cuyo nombre contengan yymmdd corresponden a ano/mes/dia de 
+  comienzo de su validez 
+
+.ls Bad Pixel Mask 
+This mask contain wrong and hot pixels. It is generated every cold cycle.
+Name: lbpm_yymmdd.pl  
+Type: binary
+.le
+ 
+.ls Bad column and row Masks: 
+Contain columns and rows without signal. It is particular to detector.
+Usefulness of this mask is interpolation of bad pixels.
+Name: lbcm_yymmdd.pl 
+Type: binary
+.le
+
+.ls Image geometric distortion correction file
+Data to correct geometric distortion. This data was found with a matrix of
+points. Depend of detector orientation. 
+Name: lgdist_yymmdd 
+Type: ASCII
+.le
+  
+.ls Espectra spatial distortion correction file
+Data to correct patial curvature of spectra. Depend of detector
+orientation, cold cycles and grism. It shold be calibrated frecuently.
+Name: fc[grisma]spt_yymmdd (example: fcZJspt_020101) 
+Type: ASCII
+.le
+  
+
+.ls Wavelength calibration file
+Contain data necessary of spectra calibration. Depend of detector
+orientation, slit, cold cycles and grism.It shold be calibrated frecuently.
+of spectraContiene los datos para su calibracion 
+Name: fc[grisma]l[rendija]_yymmdd (ejemplo: fcZJl0p75_020101) 
+Type: ASCII 
+.le 
+
+
+.ih
+DATABASE FILE FORMAT
+.ih
+EXAMPLES
+.ih
+
+BUGS
+should be tested.
+.ih
+SEE ALSO
+ltransform lgeotran
+.endhelp

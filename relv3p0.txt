@@ -1,0 +1,18 @@
+RELEASE NOTES V3.0
+  It is recommended to do 'unlear lirisdr' to avoid conflict with previous version
+   - 
+
+RELEASE NOTES V2.7
+  It is recommended to do unlear lirisdr to avoid conflict with previous version
+   - ldedither: possibility to normalize resulting image to exposure time 
+   - ldedither and lspnodcomb: reject can be done using pclip as used 
+                    within imcombine
+   - lspnodcomb: registration of spectra can be done by cross-correlation
+   - lwcsedit: update image header to contain approximate astrometry information    
+ 
+RELEASE NOTES V2.5
+  It is recommended to do unlear lirisdr to avoid conflict with previous version
+  - improved object masking for ldedither routine
+  - possibility to save an exposure image and rejection cube for ldedither
+  - simplified use of lspnodcomb (input file contains only images 
+    to be combined)

@@ -1,0 +1,9 @@
+# Parameter file for ldedither.dispopt (liris_ql)
+dispprepost,b,h,yes,,,"Display prepost treatred images"
+dispsubsky,b,h,yes,,,"Display images substracted of sky"
+dispcorrect,b,h,yes,,,"Display corrected images"
+dispres,b,h,yes,,,"Display image result"
+
+boxview,b,h,no,,,"View correct zone in all images"
+check,b,h,no,,,"Check range"
+

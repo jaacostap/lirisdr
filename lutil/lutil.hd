@@ -1,0 +1,15 @@
+# Help directory information for LIRIS_IM
+
+lutil		hlp="lirisdr$lutil/lutil.men"
+
+usage		hlp=lutil$doc/usage.hlp
+internals	hlp=lutil$doc/internals.hlp
+
+imgaccess   	hlp=lutil$doc/imgaccess.hlp,		src=lutil$imgaccess.cl
+imnumber    	hlp=lutil$doc/imnumber.hlp,		src=ltuil$imnumber.cl
+lstatist    	hlp=lutil$doc/lstatist.hlp,		src=lutil$lstatist.cl
+lcheckfile  	hlp=lutil$doc/lcheckfile.hlp, 		src=lutil$lcheckfile.cl
+lconstlist  	hlp=lutil$doc/lconstlist.hlp, 		src=lutil$lconstlist.cl
+lfileaccess	hlp=lutil$doc/lfileaccess.hlp,		src=lutil$lfileaccess.cl
+lfilename	hlp=lutil$doc/lfilename.hlp,		src=lutil$lfilename.cl
+lmaskaccess 	hlp=lutil$doc/lmaskaccess.hlp,		src=lutil$lmaskaccess.cl

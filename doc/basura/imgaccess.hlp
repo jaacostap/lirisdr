@@ -1,0 +1,30 @@
+.help imgaccess Aug2000 ingrid_ql
+.ih
+NAME
+imgaccess -- description
+.ih
+USAGE
+imgaccess input
+.ih
+PARAMETERS
+.ls input
+Name of image that should be checked for existance.
+.le
+.ls exists = no
+Boolean return value indicating if image exists.
+.le
+.ls verbose = no
+Be verbose ?
+.le
+.ih
+DESCRIPTION
+.ih
+EXAMPLES
+.ih
+TIME REQUIREMENTS
+.ih
+BUGS
+no bugs, only features.
+.ih
+SEE ALSO
+.endhelp

@@ -1,0 +1,58 @@
+.help ifindron Jul2000 ingrid_ql
+.ih
+NAME
+ifindron -- find read out noise from two dark frames
+.ih
+USAGE
+ifindron dark1 dark2
+.ih
+PARAMETERS
+.ls dark1
+Name of the first dark frame.
+.le
+.ls dark2
+Name of the second dark frame. The dark frames should have been taken with
+the same exposure time.
+.le
+.ls outtab = ""
+ptional name under which the final result table should be saved. If left empty,
+the the final result table is deleted.
+.le
+.ls section = "[*,*]"
+Section in the image that should be used for finding the readout noise. 
+It is either an image section or the name of a header keyword containing the
+image section.
+.le
+.ls xdiv = 16
+Number of divisions in x direction of the image section.
+.le
+.ls ydiv = 16
+Number of divisions in y direction of the image section.
+.le
+.ls clip = 3.
+Description
+.le
+.ls center = "mean"
+Description
+.le
+.ls binwidth = 0.1
+Description
+.le
+.ls plot = yes
+Description
+.le
+.ls verbose = no
+Be verbose ?
+.le
+.ih
+DESCRIPTION
+.ih
+EXAMPLES
+.ih
+TIME REQUIREMENTS
+.ih
+BUGS
+no bugs, only features.
+.ih
+SEE ALSO
+.endhelp

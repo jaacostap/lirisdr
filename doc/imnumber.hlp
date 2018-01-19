@@ -1,0 +1,130 @@
+.help imnumber Dec2003 liris_ql
+.ih
+NAME
+imnumber -- determine the number of the image in the observation serial 
+.ih
+USAGE
+imnumber input
+.ih
+PARAMETERS
+.ls input
+Name of image that should be checked for serial number.
+.le
+.ls type = none
+Return value indicating file type (none|dither|spectr).
+.le
+.ls imrun
+Image run number
+.le
+.ls dedither = 0
+When dither adquisition return dither image number.
+.le
+.ls maxdith = no
+When dither adquisition return number of dithers.
+.le
+.ls spectr = 0
+When spectral adquisition return spectral image number (0=no spectrum|1=A|2=B).
+.le
+.ls imnum = 0
+Return the multirun number of the image.
+.le
+.ls imaxnum = 0
+Return the total of multirun images.
+.le
+.ls snum = 0
+When some serial adquisition return the serial image number.
+.le
+.ls smaxnum = 0
+When some serial adquisition return the total serial image.
+.le
+.ls sequence
+Sequence recognised
+.le
+.ls verbose
+Verbose
+.le
+
+.ih
+DESCRIPTION
+Some times image belong to a group of images corresponding of the same observation.
+In the case of dither observations in the group, images of different dither
+positions and of spectral adquisition A  and B position can be found.
+When multirun mode more than one image can be token in the same position and various 
+cycles of images can be realised for the same observation.
+
+Because we need determine frecuently in which position image correspond in the group image
+list, this function read image header and return all these parametre values.
+
+When image is dither spectr parametre is done 0 and when spectral dither parametre is 0.
+Type parametre return what kind of group image belong (dither or spectral)
+Sequence parametre allow to know directly if the group was been recognised
+
+.ih
+DITHER FORMAT
+
+type = "dither"
+
+.nf
+*** snum = 1   
+*                   *** dedither = 1         *** imnum = 1
+*** snum = 2 ------ *                        *
+*	            *** dedither = 2 ------- *** imnum = 2
+...                 ..                       ..
+*                   *** dedither = maxdith   *** imnum = imaxnum
+*** snum = smaxnum
+.fi 
+ 
+
+.ih
+SPECTR FORMAT
+
+type = "spectr"
+
+.nf
+*** snum = 1
+*                *** spectr = 1 (A)	*** imnum = 1
+*** snum = 2 --- *			*
+*                *** spectr = 2 (B) --- *** imnum = 2
+...                                     ..
+*                                       *** imnum = imaxnum
+*** snum = smaxnum
+.fi 
+ 
+.ih
+OTHERS
+If format is not recognised type parametre is set to "none" and sequence = no to show that
+sequence was not be recognised
+ 
+ 
+.ih
+EXAMPLES
+
+.nf
+cl>imnumber r1254
+cl>lpar imnumber
+.fi
+
+.nf
+input = "r1254"   		Image
+        (type = "spectr")       Type of aquisition (none|dither|spectr)
+    (dedither = 0)              Number of dither
+     (maxdith = 2)              Total number of dither
+      (spectr = 2)              Number of spectrum position (0=no spectrum|1=A|2=B)
+       (imnum = 2)              Number of the image in multirun sequence
+     (imaxnum = 2)              Total number of image in multirun sequence
+        (snum = 1)              Number of exposure
+     (smaxnum = 1)              Total number of exposure
+    (sequence = yes)            Sequence recognised
+     (verbose = yes)            Verbose
+     
+In this example image is B spectral image and belong to a multirun group with two runs
+in wich image is in the second run. Only one serial exist.
+.fi
+
+
+.ih
+BUGS
+no bugs, only features.
+.ih
+SEE ALSO
+.endhelp

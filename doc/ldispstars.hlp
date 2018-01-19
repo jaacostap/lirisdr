@@ -1,0 +1,106 @@
+.help ldispstars Nov2003 liris_ql
+.ih
+NAME
+ldispstars -- aquire positions of stars in an image and difference among images 
+.ih
+USAGE
+This task is used to obtain star positions that can be used as reference for
+imcentroid task or other task using star correlation. It also provide manual
+shift marking a particular star in each images. This provide a good offset when 
+there is no other information.
+.ih
+PARAMETERS
+.ls input
+file list of images to be analyse
+.le
+.ls outstars
+file containing stars position in the reference image 
+.le
+.ls outshift
+when introduced file containing shift position of reference image among 
+input images
+.le
+.ls sky
+when introduced input sky image is substracted before display images
+.le
+.ls shiftf
+initial shift of images compared with reference image
+.le
+.ls xmin,ymin,xmax,ymax
+limits of rectangle of common area of images
+.le
+.ls tmpdir
+temporary worked directory
+.le
+.ls checkbox
+limited zone box when check shift reference star
+.le
+.ls verbose
+Verbose?
+.le
+.ih
+DESCRIPTION
+Input images are visualised for select stars and create shift files between images.
+Two mode are avalaible selected when /fBoutshift/fR parametre is or not introduced.
+If outshift is empty task return only marked star position file. Else offset in
+each images of a reference star is returned en outshift file. Sky can be
+substracted before display images when /fBsky/fR name is introduced. If common area
+is know parametres /fBxmin/fR,/fBymin/fR,/fBxmax/fR,/fBymax/fR should be completed 
+for showing common area during display process. These parametres represent sides of 
+common area rectangle. 
+
+/fBshiftf/fR shift file name is initial shift between images. If this parametre is
+empty no shift is considered. This shift show point around it calculation will be
+done. It will be used to display area where search point in next images. This area
+depend also to /fBcheckbox/fR parametre. Area is draw with a rectangle of its size
+except for reference star that it is represented with a circle.
+
+/fBFile format/fR of outstars and outshift is "x y" where x and represent position 
+of stars or offset between images in initial image referential. For more information
+about /fBoutstars/fR offset and /fBshiftf/fR shift file format please check
+imcombine help.
+
+No correction is made and offset is returned considering input shift and positions
+of reference star in each images. Only lmarkstars is used to search centroid of
+stars. 
+
+.ih
+EXAMPLES
+.nf
+cl> ldispstars r1262,r1263  outstars=stars62  outshif=shift6263
+.fi
+.nf
+INFO: r1262 is de reference image
+z1=3120.311 z2=11221.8
+
+ *** You are marking stars of reference image
+ *** please mark reference star present in each images with 'm'
+
+
+ *** Now you can select other reference stars
+ *** please mark star present in each images with 'm'
+ *** when you will finished press 'q'
+
+INFO: You have selected 1 reference stars
+z1=3080.247 z2=11179.
+
+ *** please mark reference star present in each images with 'm'
+.fi
+.nf
+cl>
+.fi
+
+In this example we want obtain offset between r1262 and r1263 images and some
+reference stars of r1262. In the first time r1262 is displayed and we should mark
+one star. This is the reference star that will be used for determined image shift.
+When reference star is choosen we can chose other stars that will be print in
+stars62. In this case "q" key was pressed and  no star has been choosen.
+Only reference star will be added. After the second image was displayed and
+reference star area show. User selected it and shift position was printed.
+.ih
+BUGS
+no bugs, only features.
+.ih
+SEE ALSO
+lmarkstars
+.endhelp

@@ -1,0 +1,12 @@
+lsubdithsky - Compute a sky frame combining a list of images. It also
+	subtract the sky frame to the list
+
+lrunsky - Performs sky subtraction of a list of images taking into account
+ the run number. Most useful for multrun sequences.
+ 
+lcycsky - Performs sky subtraction of a list of images taking into account 
+ the dither cycles. Most useful for many cycles sequences.   	
+
+ldedither - From a list a images it will perform sky subtraction, shift and 
+ combine them.  
+

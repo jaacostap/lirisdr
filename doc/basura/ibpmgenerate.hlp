@@ -1,0 +1,53 @@
+.help ibpmgenerate Aug2000 ingrid_ql
+.ih
+NAME
+ibpmgenerate -- generate bad pixel mask from flat field images
+.ih
+USAGE
+ibpmgenerate flat1 flat2 output
+.ih
+PARAMETERS
+.ls flat1
+Name of first flat field image - in the case of INGRID that will likely
+be a dark.
+.le
+.ls flat2
+Name of second flat field image - in the case of INGRID that will likely
+be a dark. The exposure time of the two images should be different.
+.le
+.ls output
+Name of the output bad pixel mask image.
+.le
+.ls verbose = no
+Be verbose ?
+.le
+.ls info = yes
+Show informative messages about task progress ? Info is less verbose than
+setting verbose to yes. If verbose is set to yes then info is automatically
+set to yes as well.
+.le
+.ls tmpdir = "tmp$"
+Directory for temporary files.
+.le
+.ih
+DESCRIPTION
+Generates a bad pixel mask from the ratio of two flat field (dark) images.
+Ideally the two images should have different exposure times.
+This task is basically a wrapper for the \fBccdmask\fR task from the 
+\fBnmisc\fR package. Please see the \fBccdmask\fR help page for more detailed
+information.
+.ih
+EXAMPLES
+Find a bad pixel mask from two dark images of different exposure time and
+write the output to an image called "mask"
+
+ibmpgenerate dark5 dark15 mask
+.ih
+BUGS
+no bugs, only features.
+
+This task has not really been used much (ie. tested) yet.
+.ih
+SEE ALSO
+ccdmask
+.endhelp

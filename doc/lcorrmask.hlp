@@ -1,0 +1,36 @@
+.help lcorrmask Jan2004 liris_ql
+.ih
+NAME
+lcorrmask -- make all values of image to 0 or 1
+.ih
+USAGE
+After correction of a mask put values of the new mask correctly
+.ih
+PARAMETERS
+.ls input
+Input image to be transform on mask
+.le
+.ls limit = 0.5
+Limit value of goodvalues
+.le 
+.ih                 
+DESCRIPTION
+When an image is corrected pixel values are choosen by interpolation of near pixel. So,
+when a mask is corrected values of new image are not necessarly 1 or 0 but between 
+and the new image does not be able been used like a mask. 
+Each pixels values must be exactly to 0 or 1.
+
+This task put all pixel values to 0 or 1 of an image where every pixel have values 
+between 0 and 1. Value are selected using /fBlimit/fR value. Pixel values upper it are
+put to 1 and the lower to 0. 
+
+.ih
+EXAMPLES
+cl> lcorrmask mask_image lim=0.3
+.ih
+BUGS
+no bugs, only features.
+.ih
+SEE ALSO
+lgeotran, ltransform, imreplace
+.endhelp

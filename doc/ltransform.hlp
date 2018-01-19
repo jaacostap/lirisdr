@@ -1,0 +1,80 @@
+.help ltransform Jan2004 liris_ql
+.ih
+NAME
+ltransform -- Transform longslit images and mask to user coordinates
+.ih
+USAGE
+Transform input images and input mask to obtain spatial corrected result
+and lambda calibration
+.ih
+PARAMETERS
+.ls input
+Input image
+.le
+.ls output
+Output images
+.le
+.ls trspat = "default"
+name of spatial correction file (<filename>|default)
+.le
+.ls trspec = "default"
+Name of spectral correction file (<filename>|default)
+.le
+.ls inmask = ""
+Name of input mask file
+.le
+.ls outmask = ""
+Name of output corrected mask
+.le
+.ls tmpdir = )_.tmpdir
+Temporary directory for file conversion
+.le
+.ls stddir = )_.stddir
+Parametre directory for transformations
+.le
+.ls verbose = no
+Verbose?
+.le
+.ls x1,x2,y1,y2
+Output (starting=1 and ending=2) x and y coordinates
+.le
+.ls nx,ny
+Number of output x and y pixels
+.le
+.ls interptype = "spline3"
+Interpolation type (nearest|linear|poly3|poly5|spline3)
+.le
+
+.ih           
+DESCRIPTION
+This task is similar to /fBtransform/fB (noao.twodspec.longslit) task. It is
+used to transform input images and input mask. Please refer to transform task
+help for more information about transformation steps.
+
+Transform files are introduced by user in /fBtrspat/fR and /fBtrspec/R
+parametres. Task verify existance of files. /fB"default"/fR value is able to be
+introduced. In this case /fBlcorrfile/fR task is used to search correspond
+transform files. If one of transform file does not exist only transformation of
+introduced file is done. If no transform file is introduced task is stoped.
+Existance of files is also checked.
+
+Paramtres /fBx1/fR, /fBy1/fR, /fBx2/fR, /fBy2/fR, /fBnx/fR, /fBny/fR used for 
+transformation are introduced in ltransform task parametres. In other hand, flux
+after transformation is conserved. Type of interpolation is introduced by
+user in /fBinterptype/fR parametre. Interval of spatial axis is put to 1 and
+spectra axis to INDEF. Transform configuration is the same for images and for
+mask.
+
+After transformation mask values are put to 0 or 1 using /fBlcorrmask/fR task. 
+
+
+.ih
+EXAMPLES
+
+.ih
+BUGS
+no bugs, only features.
+.ih
+SEE ALSO
+transform, lcorrfile, lcorrmask
+.endhelp

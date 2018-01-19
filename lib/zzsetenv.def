@@ -1,0 +1,14 @@
+# Global environment definitions for the lirisdr packages.
+
+set   pkglibs                 = "lirisdr$bin(arch)/,lirisdr$lib/"
+set   lirisbin                = "lirisdr$bin(arch)/"
+set   lirislib                = "lirisdr$lib/"
+
+set 	lgen		      = "lirisdr$lgen/"
+set 	lutil 	              = "lirisdr$lutil/"
+set 	lspect	              = "lirisdr$lspect/"
+set 	limage 	              = "lirisdr$limage/"
+set 	limpol		      = "lirisdr$limage/limpol/"
+set 	lspepol		      = "lirisdr$lspect/lspepol/"
+
+keep

@@ -1,0 +1,42 @@
+.help lerasetmp Dic2003 liris_ql
+.ih
+NAME
+lerasetmp -- lerasetmp each formats of liris (or ingrid) images 
+.ih
+USAGE
+Calcule sky from image list and substract to images
+.ih
+PARAMETERS
+.ls input
+name of temporary work directory
+.le
+.ls allfield
+Select if all temporary directory field will be erased 
+.le
+.ls delopt
+If allfield is false, this pset variable allow select which temporary 
+files will be erased
+.le
+.ls verbose
+Verbose?
+.le
+.ih           
+
+DESCRIPTION
+When a task is runing some temporary files are created and if task is interrupted
+theses files are not erased. User can erase this files because temporary
+files are easy to recognise. But this task allow to delete easyly calling it with
+directory where temporary files are. If we select \fBallfield\fR temporary files
+of all task will be deleted. Quite the oposite, only temporary files of selected 
+tasks in pset \fBdelopt\fR will be deleted.
+
+.ih
+EXAMPLES
+
+.ih
+BUGS
+no bugs, only features.
+.ih
+SEE ALSO
+
+.endhelp

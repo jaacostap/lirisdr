@@ -1,0 +1,48 @@
+.help lnamelist Jan2004 liris_ql
+.ih
+NAME
+lnamelist -- generate a list with names considering input list
+.ih
+USAGE
+Creat list for some task that need output list done
+.ih
+PARAMETERS
+.ls input
+Name of list containing main names
+.le
+.ls output
+Name of output file
+.le
+.ls bname = ""
+Basic name for creating random name list
+.le
+.ls pname = "p"
+Prefix name used if do not bname
+.le
+.ls refname = ""
+List of reference image names
+.le
+.ls maxnum = INDEF
+Maximum number of images in output list
+.le
+.ls extens = ""
+Extension for image names
+.le
+.ls tmpdir = )_.tmpdir
+Temporary directory for file conversion
+.le
+
+.ih                      
+DESCRIPTION
+
+
+.ih
+EXAMPLES
+
+.ih
+BUGS
+no bugs, only features.
+.ih
+SEE ALSO
+
+.endhelp

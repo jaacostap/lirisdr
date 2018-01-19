@@ -1,0 +1,57 @@
+.help lspecstat Jan2004 liris_ql
+.ih
+NAME
+lspecstat -- show spectra statistics and return list with selected spectras
+.ih
+USAGE
+Compare statistical spectra and select best of their
+.ih
+PARAMETERS
+.ls input
+List of spectres to plot
+.le
+.ls output
+List of spectres selected
+.le
+.ls indepf1 = ""/indepf2 = ""
+File related with input spectres with 1 (indepf1) or 2 (indepf2) parametres
+.le
+.ls outdepf1 = ""/outdepf2 = ""             
+Output file related with indepf1 and indepf2 respectively
+.le
+.ls delnosel = no
+Delete no selected spectral images
+.le
+.ls tmpdir = )_.tmpdir
+Temporary directory for file conversion
+.le
+.ls statplot = ""
+Plot configuration parametres
+.le
+.ls statinterv = "[*]"
+Statistic interval
+.le
+.ls imnum
+Return number of output spectres
+.le
+.ls verbose = no
+Verbose?
+.le
+
+
+.ih           
+          
+
+DESCRIPTION
+
+
+.ih
+EXAMPLES
+
+.ih
+BUGS
+no bugs, only features.
+.ih
+SEE ALSO
+
+.endhelp

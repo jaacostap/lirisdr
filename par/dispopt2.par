@@ -1,0 +1,15 @@
+# Parameter file for ldedither2.dispopt2 (liris_ql)
+dispprepost,b,h,no,,,"Display prepost treatred images"
+dispcorrow,b,h,no,,,"Display row line bad pixel corrected images"
+dispsubsky1,b,h,no,,,"Display images substracted of sky in first step"
+dispsubsky2,b,h,no,,,"Display images substracted of sky in second step"
+dispcorrect,b,h,no,,,"Display corrected images"
+dispmask,b,h,no,,,"Display individual image masks"
+dispres1,b,h,no,,,"Display image result"
+dispres2,b,h,yes,,,"Display image result"
+boxview,b,h,no,,,"View correct zone in all images"
+offsetview1,b,h,no,,,"View correct calculated offset on first step"
+offsetview2,b,h,no,,,"View correct calculated offset on second step"
+check,b,h,no,,,"Check range"
+# check errors
+chres12,b,h,no,,,"Check difference between 1 and 2 result?"

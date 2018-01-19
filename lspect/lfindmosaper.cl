@@ -1,0 +1,544 @@
+# lfindmosaper - determine slit boundaries over a flatfield or lamp spectrum
+#               Its main usage is to define slitlets in MOS spectroscopy
+# Author     : J Acosta
+#              13. Nov. 2008
+#  
+##############################################################################
+procedure lfindmosaper(input,mdf,outreg)
+
+file    input           {prompt="Input image"}
+file	mdf		{prompt="Mask definition file"}
+file    outreg          {prompt="Output file containing slitlet limits (ASCII)"}
+file    outapdb         {prompt="Output aperture database file  "}
+file	maskim		{prompt="Extraction mask image"}
+int	grow		{1,min=0,prompt="Border around slit edges"}
+int	tolerance	{10,min=0,prompt="Tolerance during aperture matching"}
+bool	incholes	{no,prompt="Include holes in the apertures definition?"}
+bool	showreg		{yes,prompt="Show apertures overlaid on image display?"}
+bool	oldmdf		{no,prompt="Mask definition file has old format?"}
+string	use_offset	{"both",enum="bottom|top|both",prompt="Offset is determined from?"}
+string	imtype		{"auto",enum="flat|arc|auto",prompt="Type of input image"}
+int	skip_bottom	{0,prompt="Number of apertures skip from bottom"}
+int	skip_top	{0,prompt="Number of apertures skip from top"}
+int     xmed            {11,prompt="Size of median filter box (along spectral axis)"}
+bool    verbose         {no,prompt="Verbose ?"}
+
+string *list            {prompt="Ignore this parameter (list)"}
+string *list2           {prompt="Ignore this parameter (list2)"}
+
+begin
+
+  string        input1, fout, mdf1, fname, inli, outreg1,dbnewap, fsecap
+  string	styp,slitid,inline,imgmed,gradpos,gradpos1,gradneg,gradneg1,tmppos,tmpneg
+  string	grnam,apermask_lst,allapermask_lst,maskim1,aperstr
+  string	tmpjn,tmpjn1,dumm,outapdb1
+  string 	lamp1,lamp2,key_imtyp,imtype1
+  int		ord,ns,nsc,offreg1,xmed1,grow1
+  int		nslt=0
+  int		nref=0
+  int		ntot,apernum,iaper,dispax,jmin,j1min,j2min
+  int		nfndaper_pos,nfndaper_neg,skpbott,skptop,tol1 
+  real		xc,y1,y2,sllen,slwdt,theta,slminlen,yc,aplow,apup,xx1,xx2,yy1,yy2
+  real		c1_a,c1_b,c2_a,c2_b,c3_a,c3_b,coef1,coef2,coef3
+  real		ytop,ybottom,yoffsetb,yoffsett,yoffset,fdumm1,yoffset2
+  real		y1tab_off,y2tab_off,dist,dist1,dist2,deg2rad
+  bool		incholes1,verb1,showreg1,oldmdf1
+  real		ytab1[35],ytab2[35],sllentab[35],xctab[35],y1fnd[35],y2fnd[35]
+  string	styptab[35],slitidtab[35]
+  int		grcase,lrzj_id,lrhk_id,hrj_id,hrh_id,hrk_id,mrk_id
+  
+  lrzj_id = 1
+  lrhk_id = 2
+  hrj_id  = 3
+  hrh_id  = 4
+  hrk_id  = 5
+  mrk_id  = 6
+  
+  deg2rad = 3.141516/180.
+  
+  input1 = input
+  mdf1 = mdf
+  outreg1 = outreg
+  imtype1 = imtype
+  
+  oldmdf1 = oldmdf
+  
+  skpbott = skip_bottom
+  skptop  = skip_top
+
+  tol1 = tolerance
+  outapdb1 = outapdb
+  incholes1 = incholes
+  showreg1 = showreg
+  verb1 = verbose
+  grow1 = grow
+  
+  ## check that outreg file does not exist
+  if (access(outreg1)) {
+     beep
+     print("")
+     print("ERROR: operation would override output file "//outreg1)
+     print("lfindmosaper aborted")
+     bye
+  }
+   
+  
+  if (imtype1 == "auto") {
+     imgets(input1,"LIRLAMP1")
+     lamp1 = imgets.value
+     imgets(input1,"LIRLAMP2")
+     lamp2 = imgets.value
+     imgets(input1,"IMAGETYP")
+     key_imtyp = imgets.value
+     if (lamp1 == "ON" || lamp2 == "ON" || key_imtyp == "arc") {
+         imtype1 = "arc"
+       } else {
+         imtype1 = "flat"
+       }
+  }
+  
+  
+  if (use_offset == "bottom") 
+    offreg1 = 1
+  else if (use_offset == "top") 
+    offreg1 = 0
+  else
+    offreg1 = 2    
+    
+  maskim1 = maskim
+  
+  dispax = 1
+  ## check that dispaxis is correctly written in the header
+  hedit(input1,"DISPAXIS",dispax,add+,upd+,ver-,>>"/dev/null")
+  
+  slminlen = 1100
+  
+  xmed1 = xmed
+
+  ## determine number of apertures in the mask reading
+  ### from design mask file
+  list2 = mdf1
+  ord = 1
+  apermask_lst = mktemp("_lfndmsaperslt")
+  allapermask_lst = mktemp("_lfndmsaaperslt")
+  while (fscan(list2,inline) != EOF)
+    {
+      if (strstr("Typ",inline) != 0)  {
+          if (oldmdf1) {
+            while (fscan(list2,ord,styp,slitid,xc,yc,sllen,slwdt,theta) != EOF)
+              {
+        	 if (strstr("SLIT",styp) != 0) 
+                   {
+                     nslt += 1
+                   }
+                  if (strstr("REF",styp) != 0) 
+                   {
+                     nref += 1
+                   }
+                  # get the minimum length
+                  if (slminlen > sllen) 
+                     slminlen = sllen 
+		  print("cos-theta ",theta,cos(theta*deg2rad))    
+		  y1 = yc - sllen/2 * cos(theta*deg2rad)
+		  y2 = yc + sllen/2 * cos(theta*deg2rad)   
+                  print(y1,y2,sllen,xc,styp,"  ",slitid,>>allapermask_lst)
+             } 
+	  
+	  } else {
+            while (fscan(list2,ord,styp,slitid,xc,y1,y2,sllen,slwdt) != EOF)
+              {
+        	 if (strstr("SLIT",styp) != 0) 
+                   {
+                     nslt += 1
+                   }
+                  if (strstr("REF",styp) != 0) 
+                   {
+                     nref += 1
+                   }
+                  # get the minimum length
+                  if (slminlen > sllen) 
+                     slminlen = sllen 
+                  print(y1,y2,sllen,xc,styp,"  ",slitid,>>allapermask_lst)
+             } 
+          }      
+      }
+    }  
+
+  ntot = nref + nslt
+  if (verb1) 
+    print("No. of slits and ref. holes= ",nslt,nref) 
+  if (verb1) 
+    print("Minimum slit length ",slminlen) 
+
+
+  tsort(allapermask_lst,"c1")
+  list = allapermask_lst 
+  iaper = 0
+  while (fscan(list,y1,y2,sllen,xc,styp,slitid) != EOF)
+    {
+       iaper += 1
+       ytab1[iaper] = y1
+       ytab2[iaper] = y2 
+       xctab[iaper] = xc
+       styptab[iaper] = styp
+       sllentab[iaper] = sllen
+       slitidtab[iaper] = slitid 
+    }
+  
+  
+   # in principle this program works only for a single image
+  
+  inli = mktemp(tmpdir//"_fndmsaperin")
+  lcheckfile (input1)
+  lfilename (input1)
+  if (lcheckfile.nimages != 0) 
+  {
+     if (lcheckfile.mode_aq != "NORMAL")
+	print(lfilename.root//"[1]",>>inli)
+     else 
+       {
+	 print("ERROR: input format not valid")
+       }
+  }   
+  else	 
+     print(lfilename.root,>>inli)  
+    
+      
+  ## do median filter along spectral axis to avoid hot pixels, but not too large to 
+  ### avoid confusion betweeen distorted slitlets
+  list = inli 
+  while (fscan(list,fname) != EOF)
+   {
+    imgmed = mktemp(tmpdir//"_lgtmstrmd") 
+    if (imtype1 == "flat")
+      median(fname,imgmed,xwin=xmed1,ywin=1)
+    else 
+      blkavg(fname,imgmed,xmed1,1)
+       
+    ## obtain gradient images
+    gradpos = mktemp("_lgtmstrgdpos")
+    gradneg = mktemp("_lgtmstrgdneg")
+    gradpos1 = mktemp("_lgtmstrgdpos")
+    gradneg1 = mktemp("_lgtmstrgdneg")
+    gradient (imgmed,gradpos1,90,boundary="nearest")
+    gradient (imgmed,gradneg1,270,boundary="nearest")
+    ## change negative values to zero to avoid confusing apfind algorithm
+    imexpr ("(a <-100) ? 0 : a",gradpos,gradpos1)
+    imexpr ("(a <-100) ? 0 : a",gradneg,gradneg1)
+    tmppos = mktemp("_lgtmstrcpos")
+    tmpneg = mktemp("_lgtmstrcneg")
+   
+    
+    ## obtain aperture limits
+    apfind.minsep = slminlen
+    ## find lower edges
+    apedit.width=7
+    apedit.radius=12
+    nfndaper_pos = nslt + nref - skpbott 
+    apfind(gradpos,reference="",interac-,nfind=nfndaper_pos,recenter+,resize-,edit+,nsum=20,\
+       minsep=slminlen)
+    match ("center", "database/ap"//gradpos, stop-, > tmppos)
+    ## find upper edges
+    nfndaper_neg = nslt + nref - skptop
+    apfind(gradneg,reference="",interac-,nfind=nfndaper_neg,recenter+,resize-,edit+,nsum=20,\
+       minsep=slminlen)
+    match ("center", "database/ap"//gradneg, stop-, > tmpneg)
+  }
+    
+
+    ## first determine average offset between measured and expected positions
+    tsort(tmppos,"c3",asc+)
+    tsort(tmpneg,"c3",asc-)
+    apernum = 1
+    list = tmppos
+    nsc = fscanf(list,"%s %f %f",dumm,fdumm1,ybottom) 
+    list = tmpneg
+    nsc = fscanf(list,"%s %f %f",dumm,fdumm1,ytop)   
+   
+    yoffsetb = ybottom - ytab1[1+skpbott]
+    yoffsett = ytop - ytab2[ntot-skptop]
+    switch (offreg1) {
+       case 0: 
+         yoffset = yoffsett
+       case 1:
+         yoffset = yoffsetb
+       case 2: 
+         yoffset = (yoffsetb+yoffsett)/2.
+    }
+    if (verb1) print(" offset [b,t], offset",yoffsetb,yoffsett,yoffset)
+    print("ytab1[1]=",ytab1[1+skpbott])
+    print("ybottom =",ybottom)
+    print("ytab2[ntot-skptop]=",ytab2[ntot-skptop])
+    print("ytop =",ytop)
+	
+	 	 	 
+    ## determine grism used in observation and select correct distortion coefficients
+    imgets(fname,"LIRGRNAM")
+    grnam = imgets.value
+    grcase = 0
+    
+    if (grnam == "lrzj8" || grnam == "lr_zj") 
+      grcase = 1
+    if (grnam == "lrhk" || grnam == "lr_hk") 
+      grcase = 2
+    if (grnam == "psgrj" || grnam == "hr_j" || grnam == "hrj") 
+      grcase = 3
+    if (grnam == "psgrh" || grnam == "hr_h" || grnam == "hrh") 
+      grcase = 4
+    if (grnam == "psgrk" || grnam == "hr_k" || grnam == "hrk") 
+      grcase = 5
+    if (grnam == "mrk") 
+      grcase = 6
+    
+    print ("grnam ",grnam)  
+      
+    switch ( grcase ) 
+    {
+    case 1 :
+      {
+         c1_a = -1.935
+	 c1_b = 0.0038
+	 c2_a = -0.241 
+	 c2_b = 0.00121
+	 c3_a = -3.872
+	 c3_b = 0.0077
+      }  
+    case 2 :
+      {
+         c1_a = -1.864
+         c1_b = 0.00369
+         c2_a = -0.716 
+         c2_b = 0.00253
+         c3_a = -3.802
+         c3_b = 0.00749  
+      }        
+   case 3 :
+      {
+         c1_a = -1.893
+	 c1_b = 0.0037
+	 c2_a = 1.976 
+	 c2_b = 0.0020
+	 c3_a = -3.807
+	 c3_b = 0.0074  
+      }        
+    case 4 :
+      {
+         c1_a = -1.794
+	 c1_b = 0.0036
+	 c2_a = -1.013 
+	 c2_b = 0.0021
+	 c3_a = -3.639
+	 c3_b = 0.0073  
+      }        
+    case 5 :
+      {
+         c1_a = -1.832
+	 c1_b = 0.00379
+	 c2_a = -0.695
+	 c2_b = 0.00198
+	 c3_a = -3.713
+	 c3_b = 0.00761 
+      }        
+    case 6 :
+      {
+         c1_a = -1.646
+	 c1_b = 0.00319
+	 c2_a = -0.444
+	 c2_b = 0.00219
+	 c3_a = -3.614
+	 c3_b = 0.00748 
+      }        
+    default: 
+      {
+         print("Error: Not valid grism identified")
+	 bye
+      }
+    }     
+  
+  ## create database file 
+  if (outapdb1 == "")
+    {
+      lfilename(input1) 
+      outapdb1 = lfilename.root
+    } 
+  dbnewap = "" 
+  printf ("database/ap%s\n",outapdb1) | scan(dbnewap)
+  if (verb1) 
+      print ("Creating database file ",dbnewap)
+    
+  if (showreg1)
+      display(input1,1)
+    
+  # re-sort position of negative maxima 
+  tsort(tmpneg,"c3",asc+)
+  list = tmppos
+  iaper = 1
+  while (fscanf(list,"%s %f %f",dumm,fdumm1,ybottom) != EOF)
+  {
+	y1fnd[iaper] = ybottom
+	iaper += 1
+  }
+
+  list = tmpneg
+  iaper = 1
+  while (fscanf(list,"%s %f %f",dumm,fdumm1,ytop) != EOF)
+  {
+	y2fnd[iaper] = ytop
+	iaper += 1
+  }
+  
+  fsecap = outreg1 
+  list = tmppos
+  list2 = tmpneg
+  apernum = 0
+  jmin = 1
+  for (i=1; i<= ntot; i += 1)
+  {
+      if (styptab[i] == "SLIT" || incholes ==1) 
+      {
+	    apernum += 1
+	    if (verb1) 
+		print ("Writing aperture ",apernum," ID ",slitidtab[i])
+            y1tab_off = ytab1[i] + yoffset
+	    y2tab_off = ytab2[i] + yoffset
+
+	    # look for the closest upper and lower limits
+	    dist1 = 9999  
+	    dist2 = 9999
+	    j1min = -1
+	    j2min = -1
+            for (j=jmin; j<= nfndaper_pos; j += 1)
+	     {
+	        dist = y1fnd[j] - y1tab_off
+	        if (dist1 > abs(dist)) {
+		  dist1 = abs(dist)
+		  j1min=j
+		}
+	     }
+            for (j=jmin; j<= nfndaper_neg; j += 1)
+	     {
+		dist = y2fnd[j] - y2tab_off
+		if (dist2 > abs(dist)) {
+		  dist2 = abs(dist)
+		  j2min = j  
+		}
+	     }
+	   
+	    ytop = y2fnd[j2min]
+	    ybottom = y1fnd[j1min] 
+	    
+	    if (abs(dist1) > tol1)
+	      {
+	        ybottom = y1tab_off
+		printf("WARNING: Using predicted lower limit in aperture %s",slitidtab[i])
+		print("Difference between predicted and measured lower limit out of tolerance")
+              }
+
+	    if (abs(dist2) > tol1)
+	      {
+	        ytop = y2tab_off
+		printf("WARNING: Using predicted upper limit in aperture %s",slitidtab[i])
+		print("Difference between predicted and measured upper limit out of tolerance")
+              }
+	      
+	    sllen = ytop - ybottom
+
+	    if ((sllen < (sllentab[i]*1.15)) && (sllen > (sllentab[i]*0.85)))  {
+		yc = (ytop+ybottom)/2.
+		yy1 = yc - sllen/2.
+		yy2 = yc + sllen/2.
+	    } else {
+		if (verb1) 
+		   printf("Measured slit length %s does not match expected value %s\n",sllentab[i],sllen)
+		yoffsetb = ybottom - y1tab_off
+		yoffsett = ytop - y2tab_off
+		if ((abs(yoffsetb) < abs(yoffsett)) && (abs(yoffsetb) < 0.5*sllentab[i])){
+		  yy1 = ybottom
+		  yy2 = yy1 + sllentab[i]
+		} else if ((abs(yoffsetb) > abs(yoffsett)) && (abs(yoffsett) < 0.5*sllentab[i])) {
+		  yy2 = ytop
+		  yy1 = ytop - sllentab[i]
+		}  else {
+		  print("Using predicted positions instead of measured ones")
+		  yy2 = y2tab_off
+		  yy1 = y1tab_off
+		}
+
+	    }
+
+	    yc = (yy1+yy2)/2. 
+	    ## add grow pixel to round aperture     
+	    yy1 = int(yy1 + 0.5 + grow1)
+	    yy2 = int(yy2 + 0.5 - grow1)
+	    ## select wavelength range in proper order, generally avoid 
+	    ## second order
+	    xx1 = 1
+	    xx2 = 1024
+	    ## overlay the selected region
+            if (showreg1) 
+	        {
+	          print(int((xx2+xx1)/2)//" "//int(yc)//" Ap-"//apernum//"/"//slitidtab[i]) | \
+		     tvmark (frame=1,coords="STDIN",mark = "rectangle",\
+          	     lengths = int(xx2 - xx1)//" "//(yy2-yy1)/(xx2-xx1),\
+          	     color = 205,interactive = no,label+ )
+	        }
+	      aplow = -(yy2-yy1)/2.
+	      apup = (yy2-yy1)/2. 
+	      coef1 = c1_a + c1_b*yc
+	      coef2 = c2_a + c2_b*yc
+	      coef3 = c3_a + c3_b*yc
+              #print ("#",time,>>dbnewap)
+              printf ("begin\taperture %s %d %g %g\n",outapdb1,apernum,512.,yc, >>dbnewap)
+	      printf ("\ttitle\t%s\n",slitidtab[i],>>dbnewap)
+	      printf ("\timage\t%s\n",outapdb1,>>dbnewap)
+	      printf ("\taperture\t%d\n",apernum,>>dbnewap)
+	      printf ("\tbeam\t%d\n",apernum,>>dbnewap)
+	      printf ("\tcenter\t%g %g\n",512,yc, >>dbnewap)
+	      printf ("\tlow\t%g %g\n",-511.,aplow, >>dbnewap) 
+	      printf ("\thigh\t%g %g\n",512.,apup,>>dbnewap)
+	      printf ("\taxis\t%d\n",2,>>dbnewap)
+	      printf ("\tcurve\t%d\n",7,>>dbnewap)
+	      printf ("\t\t%g\n",2.,>>dbnewap)   # Legendre polynomial
+	      printf ("\t\t%g\n",3.,>>dbnewap)   # order o number of terms
+	      printf ("\t\t%g\n",2.,>>dbnewap)   # lower limit
+	      printf ("\t\t%g\n",1022.,>>dbnewap)   # upper limit
+	      printf ("\t\t%g\n",coef1,>>dbnewap)   # upper limit
+	      printf ("\t\t%g\n",coef2,>>dbnewap)   # upper limit
+	      printf ("\t\t%g\n",coef3,>>dbnewap)   # upper limit
+	      printf ("\n",>>dbnewap)               # upper limit
+              
+	      ## add lines to simple section file if output request
+	      if (fsecap != "")
+	        {
+		     printf ("%s \t %s \t %4d %4d %4d %4d %4d\n",styptab[i],slitidtab[i],\
+			xctab[i],int(xx1+0.5),int(xx2+0.5),int(yy1+0.5),int(yy2+0.5), >>fsecap)
+		}    
+	    }
+	    print (" ")
+  }
+  
+  ## create mask image containing apertures
+  if (maskim1 != "") 
+     {
+        printf ("%d-%d\n",1,ntot) | scan(dumm)
+        apmask (input1,maskim1,apertures=dumm,references=outapdb1,inter-,find-,\
+	  recenter=no,resize=no,edit=no,trace=no,mask+)
+     }
+  
+  
+  
+  ## clean up
+  delete (allapermask_lst,veri-,>> "/dev/null")
+  delete (inli,veri-,>> "/dev/null")
+  imdel (imgmed,veri-,>> "/dev/null")
+  imdel (gradpos,veri-,>> "/dev/null")
+  imdel (gradneg,veri-,>> "/dev/null")
+  delete (tmppos,veri-,>> "/dev/null")
+  delete (tmpneg,veri-,>> "/dev/null")
+  delete ("database/ap"//gradneg,>>& "/dev/null")
+  delete ("database/ap"//gradpos,>>& "/dev/null")
+ 
+  list = ""
+  list2 = ""
+
+end

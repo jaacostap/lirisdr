@@ -1,0 +1,41 @@
+.help imgaccess Dec2003 liris_ql
+.ih
+NAME
+imgaccess -- Determine if an image exists
+.ih
+USAGE
+Input image access
+.ih
+PARAMETERS
+.ls input
+Name of image that should be checked for existance.
+.le
+.ls exists = no
+Boolean return value indicating if image exists.
+.le
+.ls verbose = no
+Be verbose ?
+.le
+.ih
+DESCRIPTION
+If the input image exists the task return yes in exists parametre.
+Input image name can be introduced without extension. In this case considered
+extensions will be ".fits" and ".imh"
+The parametre real_name return complet name of the image composed of
+path+root+extension.
+
+.ih
+EXAMPLES
+We want know if image r1254.fits exists
+imgaccess r1254
+If th image exists imgaccess.exists = yes
+else imgaccess.exists = no
+
+.ih
+BUGS
+no bugs, only features.
+
+.ih
+SEE ALSO
+access lfileaccess lmaskaccess
+.endhelp

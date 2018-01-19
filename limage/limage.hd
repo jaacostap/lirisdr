@@ -1,0 +1,22 @@
+# Help directory information for LIRIS_IM
+
+limage		hlp="limage$limage.men"
+
+usage		hlp=limage$doc/usage.hlp
+internals	hlp=limage$doc/internals.hlp
+
+lcycsky		hlp=limage$doc/lcycsky.hlp,		src=limage$lcycsky.cl
+ldedither   	hlp=limage$doc/ldedither.hlp,		src=limage$ldedither.cl
+ldispstars  	hlp=limage$doc/ldispstars.hlp, 		src=limage$ldispstars.cl
+lgeotran	hlp=limage$doc/lgeotran.hlp,		src=limage$lgeotran.cl
+licvgrad	hlp=limage$doc/licvgrad.hlp, 		src=limage$licvgrad.cl
+#limalign	hlp=limage$doc/limalign.hlp, 		src=limage$limalign.cl
+limcentroid	hlp=limage$doc/limcentroid.hlp, 	src=limage$limcentroid.cl	
+lmarkstar   	hlp=limage$doc/lmarkstar.hlp,		src=limage$lmarkstar.cl
+lmkflat		hlp=limage$doc/lmkflat.hlp, 		src=limage$lmkflat.cl
+lmksky		hlp=limage$doc/lmksky.hlp, 		src=limage$lmksky.cl
+lrunsky		hlp=limage$doc/lrunsky.hlp, 		src=limage$lrunsky.cl
+lstarfocus	hlp=limage$doc/lstarfocus.hlp, 		src=limage$lstarfocus.cl
+lsubdithsky	hlp=limage$doc/lsubdithsky.hlp, 	src=limage$lsubdithsky.cl
+lsubscalesky	hlp=limage$doc/lsubscalesky.hlp, 	src=limage$lsubscalesky.cl
+lwcsedit	hlp=limage$doc/lwcsedit.hlp,		src=limage$lwcsedit.cl

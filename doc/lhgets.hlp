@@ -1,0 +1,34 @@
+.help lhgets Jan2004 liris_ql
+.ih
+NAME
+lhgets -- get the value of an image header parameter as a string
+          of LIRIS images in all formats
+.ih
+USAGE
+imgets image parametre of LIRIS images
+.ih
+PARAMETERS
+.ls image
+image name
+.le
+.ls param
+image parameter to be returned
+.le
+.ls value
+output value of image parameter
+.le
+.ih                    
+
+DESCRIPTION
+
+
+.ih
+EXAMPLES
+
+.ih
+BUGS
+no bugs, only features.
+.ih
+SEE ALSO
+
+.endhelp

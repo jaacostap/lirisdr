@@ -1,0 +1,33 @@
+# Parameter file for ldithsky.skycomb and lsubsky.skycomb (liris_ql) 
+
+combmod,s,h,"single","single|run|cycles",,Obtained sky mode(single|run|cycles)
+quadrant,b,h,no,,,Scale images by quadrant
+
+plfile,s,h,"",,,List of pixel list files (optional)
+sigma,s,h,"",,,List of sigma images (optional)
+
+reject,s,h,"none","none|minmax|ccdclip|crreject|sigclip|avsigclip|pclip",,Type of rejection
+project,b,h,no,,,Project highest dimension of input images?
+outtype,s,h,"real","short|ushort|integer|long|real|double",,"Output image pixel datatype
+"
+
+scale,s,h,"none",,,"Scaling at sky subtraction (none|mode|median|mean|<keyword>)"
+zero,s,h,"none",,,Image zero point offset (none|mode|median|mean|@<file>|!<keyword>)
+weight,s,h,"none",,,Image weights
+statsec,s,h,"",,,Image section for computing statistics
+expname,s,h,"",,,"Image header exposure time keyword
+"
+lthreshold,r,h,INDEF,,,Lower threshold
+hthreshold,r,h,INDEF,,,Upper threshold
+flow,r,h,0.05,0.,,minmax: Fraction of low pixels to reject
+fhigh,r,h,0.25,0.,,minmax: Fraction of high pixels to reject
+nkeep,i,h,1,,,Minimum to keep (pos) or maximum to reject (neg)
+mclip,b,h,yes,,,Use median in sigma clipping algorithms?
+lsigma,r,h,3.,0.,,Lower sigma clipping factor
+hsigma,r,h,3.,0.,,Upper sigma clipping factor
+rdnoise,s,h,"0.",,,ccdclip: CCD readout noise (electrons)
+gain,s,h,"1.",,,ccdclip: CCD gain (electrons/DN)
+snoise,s,h,"0.",,,ccdclip: Sensitivity noise (fraction)
+sigscale,r,h,0.1,0.,,Tolerance for sigma clipping scaling corrections
+pclip,r,h,-0.5,,,pclip: Percentile clipping parameter
+grow,r,h,0.,0.,,Radius (pixels) for neighbor rejection

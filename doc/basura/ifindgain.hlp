@@ -1,0 +1,24 @@
+.help ifindgain Aug2000 ingrid_ql
+.ih
+NAME
+ifindgain -- description
+.ih
+USAGE
+ifindgain args
+.ih
+PARAMETERS
+.ls parameter
+Description
+.le
+.ih
+DESCRIPTION
+.ih
+EXAMPLES
+.ih
+TIME REQUIREMENTS
+.ih
+BUGS
+no bugs, only features.
+.ih
+SEE ALSO
+.endhelp

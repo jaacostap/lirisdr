@@ -1,0 +1,32 @@
+.help isubtract Apr2000 ingrid_ql
+.ih
+NAME
+isubtract -- subtract two images from each other
+.ih
+USAGE
+isubtract inputr1 inputr2 output
+.ih
+PARAMETERS
+.ls inputr1
+name of first input file
+.le
+.ls inputr2
+name of second input file
+.le
+.ls output
+name of output file
+.le
+.ih
+DESCRIPTION
+This task calls imarith to subtract the image inputr2 from inputr1 and write
+the result to output. The output image will be a post-pre subtracted image,
+even if the input images were not.
+.ih
+EXAMPLES
+.ih
+BUGS
+no bugs, only features.
+.ih
+SEE ALSO
+imarith iframediff
+.endhelp

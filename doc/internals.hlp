@@ -1,0 +1,121 @@
+.help internals Nov2003 liris_ql
+.ce
+\fBLIRIS_QL: Quick Look Tasks for LIRIS images\fR
+
+.ce
+\fBInternals\fR
+.nh
+Introduction
+This package provides tasks that help you in getting a quick look at your
+LIRIS data while you are observing at the telescope. On this help page you
+can find more detailed information about the file formats and the design
+of the package. To find out how to use the package please read the
+\fBusage\fR help page or the help pages of the individual tasks.
+.nh
+LIRIS File Formats
+The Data Aquisition Software (DAS) is responsible for reading the exposure that
+you took from the controller, combining it with header information from
+different components of the observatory software system and writing the
+resulting file to disk.
+Let us first have a quick look at the basic way an LIRIS image is generated.
+When you take an exposure the array is reset and immediately read out.
+This is called the pre-read image. After the exposure time has
+passed the array is read out again. This is called the post-read image.
+The information that is of interest to the observer is the difference of these
+two images. 
+How these two images are stored is determined by the DAS.
+There are currently two different DAS versions that
+can take LIRIS images and consequently two image formats and sets of FITS
+header information :
+
+\fBImplementation B\fR
+was the first DAS for LIRIS. It will probably be used until the end
+of semester 2000B for LIRIS at Cassegrain focus. The data format is a
+three dimensional data cube with the pre-read image being stored in
+in [*,*,1] and the post-read image in [*,*,2]. Implementation B does provide
+multiple non destructive reads (MNDR) and coadds.
+
+\fBUltraDAS\fR
+is the DAS that is used for LIRIS at NAOMI and probably from
+semester 2001A on also for LIRIS at Cassegrain focus. Besides MNDR and
+coadds UltraDAS also allows for windowing and eventually read out ramps.
+The data is stored in FITS image extensions. In the simple case
+of no windowing, the pre-read image is stored in the first image extension and
+the post-read is stored in the second extension. Some header information is
+globally stored in the header of the zeroth image extension (which contains
+no data). In the case that windows are enabled there is one extension
+per window for the pre-read image followed by one extension per window for
+the post-read image. Therefor a frame with 3 windows would have 6 extensions.
+.nh
+Core Support Routines
+\fBliris_ql\fR contains five hidden tasks, \fBicheckfile\fR, \fBifileinfo\fR,
+\fBimarkstar\fR ,\fBimgaccess\fR and \fBiwininfo\fR which are core support
+routines. They help in handling the differences in the image format or provide
+general low level support and are used in most other scripts in the package.
+In short, \fBicheckfile\fR checks for a file if post-pre read subtraction
+has already taken place, the DAS that wrote the file, the number of image
+extensions and the number of windows in the file.
+\fBifileinfo\fR returns the exposure time and number of coadds and MNDR
+for an image.
+\fBimarkstar\fR returns the (centred) coordinates of a star that was marked
+on the displayed image. Besides being able to mark a position also a number
+of image examination options modeled after \fBimexamine\fR are available.
+\fBimgaccess\fR checks if an image with the input name already exists.
+\fBiwininfo\fR takes the image and window number as input. For this window
+it returns the start and end pixels in x and y as well as the combined
+section string.
+
+For more detailed information on the routines please see the individual help
+pages.
+
+.nh
+Core Routines
+\fBiframediff\fR is the central routine of the package. It handles the post-pre
+integration subtraction together with optional flat-fielding, dark subtraction,
+sky subtraction and world coordinate system generation.
+
+For more detailed information please see the iframediff help page.
+
+.nh
+Support Routines
+The support routines work on raw LIRIS files or post-pre read subtracted
+files. Many of them are simply wrappers for commonly used IRAF routines.
+If they produce an output file then the output file will be post-pre read
+subtracted.
+\fBibpmgenerate\fR generates bad pixel masks.
+\fBicombine\fR is a wrapper for the \fBimcombine\fR task.
+\fBifinddark\fR is a script that finds the unique exposure times from all
+the input files. The output are the TCS commands to take dark exposures
+with all the unique exposure time lengths.
+\fBisetwcs\fR set the WCS from the telescope RA and DEC information in the
+file header.
+\fBistatistics\fR is a wrapper for the \fBimstatistics\fR task.
+\fBisubtract\fR is a wrapper for the \fBimarith\fR task with the operator
+fixed to "-".
+
+For more detailed information on the routines please see the individual help
+pages.
+
+.nh
+High Level Routines
+\fBidedither\fR combines dithered observations.
+\fBidispframe\fR is a wrapper for the \fBdisplay\fR task and displays raw
+or post-pre read subtrated images.
+\fBidomeflat\fR generates a flat from dome flat exposures.
+\fBifindron\fR calculated the read out noise from two dark frames.
+\fBirefinewcs\fR allows to specify the coordinate information by selecting
+a star and providing the RA and DEC for it.
+\fBiskyflat\fR generates a flat from sky frames.
+\fBistarfocus\fR is a wrapper for the \fBstarfocus\fR task and is used to find
+the best focus position from a focus sequence.
+
+For more detailed information on the routines please see the individual help
+pages.
+
+.nh
+Author
+.nf
+Robert Greimel (greimel@ing.iac.es)
+.fi
+
+.endhelp

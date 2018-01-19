@@ -1,0 +1,50 @@
+# Make the LIRIS package
+
+$call	relink
+$exit
+
+update:
+	$call	relink
+	$call	install
+	;
+
+old:
+	$set	LIBS1 = "-lds -lncar -lgks -lllsq"
+	$set	LIBS2 = "-lxtools -lcurfit -lgsurfit -lnlfit -liminterp"
+	$update	libpkg.a
+	$omake	x_liris.x
+	$link	x_liris.o libpkg.a $(LIBS1) $(LIBS2) -o xx_liris.e
+	$call	install
+	;
+
+relink:
+#	$set	LIBS1 = "-lasttools"
+	$set	LIBS2 = "-lds -lncar -lgks -lllsq"
+	$set    LIBS3 = "-lxtools -lcurfit -lgsurfit -lnlfit -liminterp"
+	$update        libpkg.a
+	$omake x_liris.x
+	$link	x_liris.o libpkg.a  $(LIBS2) $(LIBS3) -o xx_liris.e
+	;
+
+
+install:
+	$move	xx_liris.e lirisbin$x_liris.e
+	$cp     starfocus.par lirisbin$starfocus.par
+	$cp 	psfmeasure.par lirisbin$psfmeasure.par
+	;
+
+
+generic:
+        $set    GEN = "$$generic -k"
+        $ifolder (fpfixpix.x, fpfixpix.gx)
+            $(GEN) fpfixpix.gx -o fpfixpix.x $endif
+        ;
+
+libpkg.a:
+	stfgraph.x	starfocus.h <error.h> <gset.h> <mach.h>
+	stfmeasure.x	starfocus.h <error.h> <imhdr.h> <imset.h>
+	stfprofile.x	starfocus.h <imhdr.h> <mach.h> <math.h>\
+			<math/iminterp.h>
+	t_starfocus.x	starfocus.h <error.h> <imhdr.h> <mach.h>
+
+	;

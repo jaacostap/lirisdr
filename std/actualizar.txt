@@ -1,0 +1,27 @@
+mv fclrhkl0p75ar20050123 fcHKl0p75_050123   modbeg
+mv fclrhkl0p75ar20050323 fcHKl0p75_050323   modbeg
+mv fclrhkl0p75ar20050706 fcHKl0p75_050706   modbeg
+mv fclrhkl0p75ar20060112 fcHKl0p75_060112   modbeg
+mv fclrhkl0p75ar20060121 fcHKl0p75_060121   modbeg
+mv fclrhkl0p75ar20060708 fcHKl0p75_060708   modbeg
+mv fclrhkl0p75ar20060720 fcHKl0p75_060720   modbeg
+mv fclrhkl1ar20050323    fcHKl1_050323   modbeg
+mv fclrhkl1ar20050706    fcHKl1_050706   modbeg
+mv fclrhkl1ar20060107    fcHKl1_060107   modbeg
+mv fclrhkl1ar20060112    fcHKl1_060112   modbeg
+mv fclrhkl1ar20060714    fcHKl1_060714   modbeg
+mv fclrhkl1ar20070103    fcHKl1_070103   modbeg
+
+
+mv fclrzj8l0p75ar20050323 fcZJl0p75_050323   modbeg
+mv fclrzj8l1ar20050124    fcZJl1_050124   modbeg
+mv fclrzj8l1ar20050323    fcZJl1_050323   modbeg
+mv fclrzj8l1ar20060109    fcZJl1_060109   modbeg
+mv fclrzj8l1ar20060112    fcZJl1_060112   modbeg
+mv fclrzj8l1ar200601230   fcZJl1_061230   modbeg
+mv fclrzj8l1ar20060708    fcZJl1_060708   modbeg 
+mv fclrzj8l1ar20060716    fcZJl1_060716   modbeg
+mv fclrzj8l1ar20060720    fcZJl1_060720   modbeg
+mv fclrzj8l1ar20060809    fcZJl1_060809   modbeg
+mv fclrzj8l1ar20070102    fcZJl1_070102   modbeg
+mv fclrzj8l1ar20070105    fcZJl1_070105   modbeg

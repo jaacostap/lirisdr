@@ -1,0 +1,62 @@
+# Help directory information for LIRIS_QL
+
+$lgen	= "./lgen/"
+$lutil	= "./lutil/"
+$limage	= "./limage/"
+$lspect	= "./lspect/"
+
+
+# Define help files for the packages.
+
+
+
+lgen	        men = lgen$lgen.men,
+                hlp = ..,
+                sys = lgen$lgen.hlp,
+                pkg = lgen$lgen.hd,
+                src = lgen$lgen.cl
+
+limage	        men = limage$limage.men,
+                hlp = ..,
+                sys = limage$limage.hlp,
+                pkg = limage$limage.hd,
+                src = limage$limage.cl
+
+lspect	        men = lspect$lspect.men,
+                hlp = ..,
+                sys = lspect$lspect.hlp,
+                pkg = lspect$lspect.hd,
+                src = lspect$lspect.cl
+
+
+
+lirisdr		hlp="lirisdr$lirisdr.men"
+
+usage		hlp=lirisdr$doc/usage.hlp
+internals	hlp=lirisdr$doc/internals.hlp
+
+#imgaccess   	hlp=lirisdr$doc/imgaccess.hlp,		src=imgaccess.cl
+#lcheckfile  	hlp=lirisdr$doc/lcheckfile.hlp, 	src=lcheckfile.cl
+#lcorrow      	hlp=lirisdr$doc/lcorrow.hlp, 	src=lcorrow.cl
+#lconstlist  	hlp=lirisdr$doc/lconstlist.hlp, 	src=lconstlist.cl
+#lcpixmap  	hlp=lirisdr$doc/lcpixmap.hlp, 	src=lcpixmap.cl
+#ldisplay    	hlp=lirisdr$doc/ldisplay.hlp,		src=ldisplay.cl
+#lfilename	hlp=lirisdr$doc/lfilename.hlp,		src=lfilename.cl
+#lframediff  	hlp=lirisdr$doc/lframediff.hlp, 	src=lframediff.cl
+#limfiles    	hlp=lirisdr$doc/limfiles.hlp,		src=limfiles.cl
+#lmarkstar   	hlp=lirisdr$doc/lmarkstar.hlp,		src=lmarkstar.cl
+#lmaskaccess 	hlp=lirisdr$doc/lmaskaccess.hlp,	src=lmaskaccess.cl
+#lreduction	hlp=lirisdr$doc/lreduction.hlp, 	src=lreduction.cl
+#lshiftwcs   	hlp=lirisdr$doc/lshiftwcs.hlp,		src=lshiftwcs.cl
+#lstarmask   	hlp=lirisdr$doc/lstarmask.hlp,		src=lstarmask.cl
+
+
+lstatist    	hlp=lirisdr$doc/lstatist.hlp,		src=lstatist.cl
+imnumber    	hlp=lirisdr$doc/imnumber.hlp,		src=imnumber.cl
+lfileaccess	hlp=lirisdr$doc/lfileaccess.hlp,	src=lfileaccess.cl
+
+ldispstars  	hlp=lirisdr$doc/ldispstars.hlp, 	src=ldispstars.cl
+ldedither   	hlp=lirisdr$doc/ldedither.hlp,		src=ldedither.cl
+
+
+lspectr     	hlp=lirisdr$doc/lspectr.hlp,		src=lspectr.cl

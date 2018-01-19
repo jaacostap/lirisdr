@@ -1,0 +1,67 @@
+  
+-> [lwavecalid] 
+   -hacer que la calibracion del arco en la posicion B se haga a partir de
+   lo que ha encontrado para A, usar reidentify
+   - añadir la posibilidad de sustraer el continuo o arcos apagados en la 
+    tarea
+   - si no existe arcos apagados intentar sustraer un ajuste del continuo 
+   - leer el grisma de la cabecera
+   - ajustar valores iniciales de K
+  
+-> [lmosextall]: 
+   - poner dos ficheros con las salidas   
+   
+##########################################################  
+
+
+- generar una tarea que haga recorte de las imagenes
+-flat-field usando response en una franja solamente no debe introducir variacion
+espacial
+
+- hacer sustraccion de cielo a pares A-B
+- despues de sustraccion de cielo, 
+
+- ver como hace gscut de gmos para determinar los limites de los espectros.
+  Usa gradient, la parte positiva y negativa. Luego usa apfind para encontrar
+  los picos en las imagenes negativas y positivas. 
+  
+- en lskynod3pt se puede usar el cielo mediana de cada ciclo para restar a 
+  cada espectro.   
+
+- para hacer la segunda substraccion de cielo se puede mirar como lo 
+  hacen en gsskysub, alli evitan la parte central alrededor del objeto y
+  tambien definen una zona de cielo como porcentaje del ancho rendija. 
+
+=============== CREAR FICHEROS MEF =========================
+- trabajar con ficheros mef, incluyendo extensiones del tipo 
+science, variance and quality 
+ Tambien para colocar los espectros multiobjetos en diferentes extensiones.
+ Se usa fgwrite para crear el fichero mef a partir de ficheros individuales
+ Se usa para fxinsert para añadir extensiones
+
+=============== USANDO IMSHIFT =========================
+
+- el problema es que al desplazar las imagenes se pierde las extensiones,
+la estrategia parece ser copiar las imagenes en imagenes mayores, con el 
+maximo desplazamiento hacia cada lado (se puede crear con imexpr) y luego
+copiar usando imcopy. A la vez se crea una mascara por cada imagen que se
+desplaza a la vez que la imagen ampliada. Esta mascara  
+ 
+=================MOS ========================
+escribir un programa para visualizar las secciones de las mascaras
+a partir del fichero .txt
+
+problema del orden de las rendijas usando lmoswavecal que no coinciden
+el orden del fichero de las secciones y el de la mascara (solucionado
+parcialmente con el uso de findmask.sh
+
+Incorporar findmask.sh al paquete??
+
+generar mapas del Ar con mas desplazamiento hacia el azul
+
+ltrimim 
+
+para objetos brillantes, hacer mapa de aperturas a partir de una imagen
+tipo flatfield usando gradientes. Luego hacer recentrado y
+redifinicion de las aperturas. Luego extraer arcos con las mismas aperturas
+que la imagen

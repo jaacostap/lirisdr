@@ -1,0 +1,36 @@
+.help ifileinfo Aug2000 ingrid_ql
+.ih
+NAME
+ifileinfo -- find information about the exposure
+.ih
+USAGE
+ifileinfo input
+.ih
+PARAMETERS
+.ls input
+Name of image that should be checked for existance.
+.le
+.ls exptim = 0.
+Real return value indicating the exposure time.
+.le
+.ls coadd = 0
+Integer return value indicating the number of coadds.
+.le
+.ls mndr = 0
+Integer return value indicating the number of MNDR.
+.le
+.ls verbose = no
+Be verbose ?
+.le
+.ih
+DESCRIPTION
+.ih
+EXAMPLES
+.ih
+TIME REQUIREMENTS
+.ih
+BUGS
+no bugs, only features.
+.ih
+SEE ALSO
+.endhelp
